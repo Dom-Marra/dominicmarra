@@ -1,25 +1,113 @@
-
-// Custom Theming for Angular Material
-// For more information: https://material.angular.io/guide/theming
 @import '~@angular/material/theming';
-// Plus imports for other components in your app.
+@import url('https://fonts.googleapis.com/css2?family=Ropa+Sans&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Francois+One&display=swap');
 
-// Include the common styles for Angular Material. We include this here so that you only
-// have to load a single css file for Angular Material in your app.
-// Be sure that you only ever include this mixin once!
 @include mat-core();
 
-// Define the palettes for your theme using the Material Design palettes available in palette.scss
-// (imported above). For each palette, you can optionally specify a default, lighter, and darker
-// hue. Available color palettes: https://material.io/design/color/
-$dominicmarra-primary: mat-palette($mat-indigo);
-$dominicmarra-accent: mat-palette($mat-pink, A200, A100, A400);
+$white: (
+  50: #FFFFFF,
+  100: #FFFFFF,
+  200: #FFFFFF,
+  300: #FFFFFF,
+  400: #FFFFFF,
+  500: #FFFFFF,
+  600: #FFFFFF,
+  700: #FFFFFF,
+  800: #FFFFFF,
+  900: #FFFFFF,
+  A100: #FFFFFF,
+  A200: #FFFFFF,
+  A400: #FFFFFF,
+  A700: #FFFFFF,
+  contrast: (
+      50: #FFFFFF,
+      100:#FFFFFF,
+      200:#FFFFFF,
+      300:#FFFFFF,
+      400:#FFFFFF,
+      500:#FFFFFF,
+      600:#FFFFFF,
+      700:#FFFFFF,
+      800:#FFFFFF,
+      900:#FFFFFF,
+      A100:#FFFFFF,
+      A200:#FFFFFF,
+      A400:#FFFFFF,
+      A700:#FFFFFF,
+  )
+);
 
-// The warn palette is optional (defaults to red).
-$dominicmarra-warn: mat-palette($mat-red);
+$black: (
+  50: #000000,
+  100: #000000,
+  200: #000000,
+  300: #000000,
+  400: #000000,
+  500: #000000,
+  600: #000000,
+  700: #000000,
+  800: #000000,
+  900: #000000,
+  A100: #000000,
+  A200: #000000,
+  A400: #000000,
+  A700: #000000,
+  contrast: (
+      50: #000000,
+      100:#000000,
+      200:#000000,
+      300:#000000,
+      400:#000000,
+      500:#000000,
+      600:#000000,
+      700:#000000,
+      800:#000000,
+      900:#000000,
+      A100:#000000,
+      A200:#000000,
+      A400:#000000,
+      A700:#000000,
+  )
+);
 
-// Create the theme object. A theme consists of configurations for individual
-// theming systems such as "color" or "typography".
+$red: (
+  50: #BF360C,
+  100: #BF360C,
+  200: #BF360C,
+  300: #BF360C,
+  400: #BF360C,
+  500: #BF360C,
+  600: #BF360C,
+  700: #BF360C,
+  800: #BF360C,
+  900: #BF360C,
+  A100: #BF360C,
+  A200: #BF360C,
+  A400: #BF360C,
+  A700: #BF360C,
+  contrast: (
+      50: #BF360C,
+      100:#BF360C,
+      200:#BF360C,
+      300:#BF360C,
+      400:#BF360C,
+      500:#BF360C,
+      600:#BF360C,
+      700:#BF360C,
+      800:#BF360C,
+      900:#BF360C,
+      A100:#BF360C,
+      A200:#BF360C,
+      A400:#BF360C,
+      A700:#BF360C,
+  )
+);
+
+
+$dominicmarra-primary: mat-palette($white);
+$dominicmarra-accent: mat-palette($black);
+$dominicmarra-warn: mat-palette($red);
+
 $dominicmarra-theme: mat-light-theme((
   color: (
     primary: $dominicmarra-primary,
@@ -28,12 +116,32 @@ $dominicmarra-theme: mat-light-theme((
   )
 ));
 
-// Include theme styles for core and each component used in your app.
-// Alternatively, you can import and @include the theme mixins for each component
-// that you are using.
 @include angular-material-theme($dominicmarra-theme);
 
-/* You can add global styles to this file, and also import other style files */
+$dominicmarra-typography: mat-typography-config(
+  $font-family: 'Francois One, monospace',
+  $headline: mat-typography-level(45px, 45px, 500),
+  $title: mat-typography-level(35px, 35px, 500),
+  $subheading-2: mat-typography-level(25px, 25px, 500, 'Ropa Sans'),
+  $body-1: mat-typography-level(18px, 18px, 500, 'Ropa Sans'),
+  $caption: mat-typography-level(16px, 16px, 500, 'Ropa Sans'),
+);
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+@include angular-material-typography($dominicmarra-typography);
+
+html, body { 
+  height: 100%;
+}
+
+body { 
+  height: 2000px;
+  margin: 0; 
+}
+
+@media only screen and (max-width: 790px) { 
+
+  body { 
+    //fill
+  }
+
+}

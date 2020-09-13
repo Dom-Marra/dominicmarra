@@ -140,8 +140,30 @@ body {
 
 @media only screen and (max-width: 790px) { 
 
-  body { 
-    //fill
-  }
+  $dominicmarra-typography: mat-typography-config(
+    $font-family: 'Francois One, monospace',
+    $headline: mat-typography-level(40px, 40px, 500),
+    $title: mat-typography-level(33px, 33px, 500),
+    $subheading-2: mat-typography-level(22px, 22px, 500, 'Ropa Sans'),
+    $body-1: mat-typography-level(16px, 16px, 500, 'Ropa Sans'),
+    $caption: mat-typography-level(14px, 14px, 500, 'Ropa Sans'),
+  );
+
+  @include angular-material-typography($dominicmarra-typography);
+
+}
+
+@media only screen and (max-width: 360px) { 
+
+  $dominicmarra-typography: mat-typography-config(
+    $font-family: 'Francois One, monospace',
+    $headline: mat-typography-level(35px, 35px, 500),
+    $title: mat-typography-level(27px, 27px, 500),
+    $subheading-2: mat-typography-level(20px, 20px, 500, 'Ropa Sans'),
+    $body-1: mat-typography-level(14px, 14px, 500, 'Ropa Sans'),
+    $caption: mat-typography-level(12px, 12px, 500, 'Ropa Sans'),
+  );
+
+  @include angular-material-typography($dominicmarra-typography);
 
 }

@@ -1,0 +1,28 @@
+<div class="projectcard-container"  (click)="this.toggleCard($event.target)" (mouseenter)="highlightCard(true)" (mouseleave)="highlightCard(false)">
+    <div class="projectcard-front" [ngStyle]="{'background-color': this.project.getColor()}">
+        <div class="projectcard-heading">
+            <h2 class="highlight-text">{{this.project.getName()}}</h2>
+            <p class="projectcard-caption mat-caption highlight-text">{{this.project.getCaption()}}</p>
+        </div>
+        <div class="projectcard-image"></div>
+        <div class="projectcard-expand highlight-text">
+            <p>Click To Read</p>
+        </div>
+    </div>
+    <ngx-simplebar [@upDown]="this.upDown" class="projectcard-back">
+        <div class="projectcard-details-header">
+            <h2>{{this.project.getName()}}</h2>
+            <div class="projectcard-links">
+                <fa-icon [icon]="faGithub" class="projectcard-icon"></fa-icon>
+                <fa-icon [icon]="faLink" class="projectcard-icon"></fa-icon>
+            </div>
+        </div>
+        <div class="projectcard-images"></div>
+        <p class="projectcard-details">
+            {{this.project.getDescription()}}
+        </p>
+        <div class="project-technologies">
+            <fa-icon *ngFor="let techIcon of projectIcons" [icon]="techIcon" class="projectcard-icon"></fa-icon>
+        </div>
+    </ngx-simplebar>
+</div>

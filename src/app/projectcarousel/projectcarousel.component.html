@@ -1,0 +1,11 @@
+<div id="project-carousel">
+    <fa-icon id="carousel-next" (click)="next()" [icon]="faChevronRight">next</fa-icon>
+    <fa-icon id="carousel-previous" (click)="previous()" [icon]="faChevronLeft">previous</fa-icon>
+    <div id="project-container">
+        <app-projectcard 
+                #slides
+                *ngFor="let project of projects" 
+                class="project" 
+                [project]="project"></app-projectcard>
+    </div>
+</div>

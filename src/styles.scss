@@ -123,7 +123,7 @@ $dominicmarra-typography: mat-typography-config(
   $headline: mat-typography-level(45px, 45px, 500),
   $title: mat-typography-level(35px, 35px, 500),
   $subheading-2: mat-typography-level(25px, 25px, 500, 'Ropa Sans'),
-  $body-1: mat-typography-level(18px, 18px, 500, 'Ropa Sans'),
+  $body-1: mat-typography-level(20px, 20px, 500, 'Ropa Sans'),
   $caption: mat-typography-level(16px, 16px, 500, 'Ropa Sans'),
 );
 
@@ -133,8 +133,7 @@ html, body {
   height: 100%;
 }
 
-body { 
-  height: 2000px;
+body {  
   margin: 0; 
 }
 

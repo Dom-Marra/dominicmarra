@@ -50,22 +50,10 @@ export class ProjectcardComponent implements OnInit {
   public toggleCard(element: Element) {
     if (this.upDown == "up") {
       this.upDown = "down";
-      this.scrollToCard(element);
     } else {
       this.upDown = "up";
     }
   }
-
-  /**
-   * Scrolls to the card
-   * 
-   * @param element 
-   *        the card
-   */
-  public scrollToCard(element: Element) {
-    element.scrollIntoView({behavior: "smooth", block: "start"});
-  }
-
   /**
    * Highlights the cards text
    * 

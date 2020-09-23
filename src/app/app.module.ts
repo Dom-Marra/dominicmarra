@@ -7,10 +7,13 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { SimplebarAngularModule } from 'simplebar-angular';
+
 import { NavbarComponent } from './navbar/navbar.component';
 import { HomeComponent } from './home/home.component';
 import { ProjectcardComponent } from './projectcard/projectcard.component';
 import { ProjectcarouselComponent } from './projectcarousel/projectcarousel.component';
+import { ProjectcardDetailsComponent } from './projectcard-details/projectcard-details.component';
+
 
 @NgModule({
   declarations: [
@@ -18,7 +21,8 @@ import { ProjectcarouselComponent } from './projectcarousel/projectcarousel.comp
     NavbarComponent,
     HomeComponent,
     ProjectcardComponent,
-    ProjectcarouselComponent
+    ProjectcarouselComponent,
+    ProjectcardDetailsComponent
   ],
   imports: [
     BrowserModule,

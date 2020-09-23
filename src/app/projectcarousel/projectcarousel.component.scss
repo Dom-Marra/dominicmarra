@@ -6,6 +6,7 @@
     min-height: calc(300px);
     max-height: calc(100vh - 150px);
     width: 100%;
+    overflow-x: hidden;
 
     #carousel-next, #carousel-previous {
         position: absolute;
@@ -41,23 +42,24 @@
 
     #project-container {
         position: relative;
+        display: flex;
+        flex-direction: row;
         overflow-x: hidden;
-        width: 100%;
+        min-width: 200vw;
         height: 100%;
-    
+        transition: none;
+
         .project {
-            position: absolute;
-            width: 33.3336vw;
-            height: 100%;
+            flex: 1 0 33.33vw;
     
             &:hover {
+                position: relative;
                 z-index: 100;
                 box-shadow: 0 0 25px rgba($color: #000000, $alpha: 0.5);
                 transition: all 0.4s;
             }
         }
     }
-
 }
 
 
@@ -74,7 +76,7 @@
         #project-container {
 
             .project {
-                width: 50%;
+                width: 50vw;
             }
         }
     }

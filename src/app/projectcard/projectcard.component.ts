@@ -1,59 +1,33 @@
 import { Component, ElementRef, Input, OnInit } from '@angular/core';
-import { trigger, state, style, animate, transition, query, group, animateChild } from '@angular/animations';
-import { faGithub } from '@fortawesome/free-brands-svg-icons';
-import { faLink } from '@fortawesome/free-solid-svg-icons';
 import { Project } from '../project';
+import { MatDialog, MatDialogConfig } from "@angular/material/dialog";
+import { ProjectcardDetailsComponent } from '../projectcard-details/projectcard-details.component';
 
 @Component({
   selector: 'app-projectcard',
   templateUrl: './projectcard.component.html',
-  styleUrls: ['./projectcard.component.scss'],
-  animations: [
-    trigger('upDown', [
-      state('down', style({
-        height: '100%'
-      })),
-      state('up', style({
-        height: '0'
-      })),
-      transition('down <=> up', [
-        animate('0.5s ease-out')
-      ])
-    ])
-  ]
+  styleUrls: ['./projectcard.component.scss']
 })
 
 export class ProjectcardComponent implements OnInit {
 
   @Input() project: Project;
 
-  public faGithub = faGithub; //github icon
-  public faLink = faLink;     //website link icon
-
-  public upDown = "up";       //project card details state
-    
-  public projectIcons: Array<any>;    //icons of the project
-
-  constructor(private eleRef: ElementRef) { }
+  constructor(private eleRef: ElementRef, private dialog: MatDialog) { }
 
   ngOnInit(): void {
-    //retreive the icons that belon to the project
-    this.projectIcons = this.project.getTechnologyIcons();
   }
 
   /**
-   * Toggles the cards animation
-   * 
-   * @param element 
-   *        the card
+   * Opens project details dialog with the selected project as the data
    */
-  public toggleCard(element: Element) {
-    if (this.upDown == "up") {
-      this.upDown = "down";
-    } else {
-      this.upDown = "up";
-    }
+  public openProjectDialog() {
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.data = { project: this.project };
+    dialogConfig.panelClass = 'project-details-panel';
+    this.dialog.open(ProjectcardDetailsComponent, dialogConfig);
   }
+
   /**
    * Highlights the cards text
    * 
@@ -125,7 +99,6 @@ export class ProjectcardComponent implements OnInit {
 
     //return lightened value
     return 'hsl(' + Math.floor(hue) + ',' + sat * 100 + '%,' + 80 + '%)';
-
   }
  
 }

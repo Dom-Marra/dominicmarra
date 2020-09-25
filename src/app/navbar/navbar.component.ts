@@ -33,13 +33,14 @@ import { trigger, state, style, animate, transition } from '@angular/animations'
 })
 export class NavbarComponent implements OnInit {
 
-  @HostListener('window:scroll') onScroll(e: Event): void {
+  @HostListener('window:scroll') 
+  onScroll() {
 
     //Set navbar state depending on scroll position
-    if (window.scrollY >= 200 && this.navBarSize == "large") {
+    if (window.scrollY >= 90 && this.navBarSize == "large") {
       this.navBarSize = 'small';
       this.setNavBarHeight();
-    } else if (window.scrollY <= 200 && this.navBarSize == "small") {
+    } else if (window.scrollY < 90 && this.navBarSize == "small") {
       this.navBarSize = 'large';
       this.setNavBarHeight();
     }

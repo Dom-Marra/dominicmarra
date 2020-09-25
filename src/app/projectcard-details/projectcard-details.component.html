@@ -1,1 +1,23 @@
-<p>projectcard-details works!</p>
+<h2 mat-dialog-title #projectHeader class="projectcard-details-header">
+    {{this.project.getName()}}
+    <div class="projectcard-links">
+        <fa-icon [icon]="faGithub" class="projectcard-icon"></fa-icon>
+        <fa-icon [icon]="faLink" class="projectcard-icon"></fa-icon>
+    </div>
+</h2>
+
+<mat-dialog-content #projectDetails>
+    <div class="project-details-container">
+        <ngx-simplebar id="simpBar">
+            <div class="projectcard-details">
+                <div class="projectcard-images"></div>
+                <p class="projectcard-details">
+                    {{this.project.getDescription()}}
+                </p>
+                <div class="project-technologies">
+                    <fa-icon *ngFor="let techIcon of projectIcons" [icon]="techIcon" class="projectcard-icon"></fa-icon>
+                </div>
+            </div>
+        </ngx-simplebar>
+    </div>
+</mat-dialog-content>

@@ -9,9 +9,8 @@ import { faChevronRight, faChevronLeft } from '@fortawesome/free-solid-svg-icons
 })
 export class ProjectcarouselComponent implements OnInit {
 
-  @ViewChild('carouselContainer') carouselContainer: ElementRef;
-  @ViewChildren('slides', {read: ElementRef}) slidesOriginal: QueryList<ElementRef>;
-  @ViewChildren('slideCopies', {read: ElementRef}) slidesCopy: QueryList<ElementRef>;
+  @ViewChild('carousel') carouselParent: ElementRef;
+  @ViewChild('slides') carouselContainer: ElementRef;
 
   @HostListener('window:resize')
   onResize() {
@@ -66,13 +65,15 @@ export class ProjectcarouselComponent implements OnInit {
 
     this.setCarouselWidth();
 
-    let slideWidth = (<HTMLElement> this.carouselContainer.nativeElement.getElementsByClassName('project')[0]).offsetWidth;
+    let slideWidth = (<HTMLElement> this.carouselContainer.nativeElement.getElementsByClassName('project')[0]).getBoundingClientRect().width;
 
     let slideAmount = slideWidth * this.currentSlideCount;
 
     this.carouselContainer.nativeElement.animate([
-      {transform: 'translate3D(' + slideAmount + 'px, 0, 0)'}
-    ], {fill: 'both', duration: 0});
+      {transform: 'translateX(' + slideAmount + 'px)'}
+    ], {fill: 'both', duration: 0}).finished.then(() => {
+      this.carouselContainer.nativeElement.style.transform = 'translateX(' + slideAmount + 'px)';
+    })
   }
 
   
@@ -83,18 +84,23 @@ export class ProjectcarouselComponent implements OnInit {
   public setCarouselWidth() {
 
     let carouselContainerWidth = 0;
-    let currentScreenWidth = document.documentElement.offsetWidth;
-    let slideWidth = (document.documentElement.offsetWidth / 3);
+    let screenWidth = document.documentElement.offsetWidth;
+    let carouselContStyle = window.getComputedStyle(<HTMLElement> this.carouselParent.nativeElement);
+    let carouselParentWidth = parseFloat(carouselContStyle.width)
+                            - parseFloat(carouselContStyle.paddingLeft)
+                            - parseFloat(carouselContStyle.paddingRight);
 
-    if (currentScreenWidth > 790 && currentScreenWidth <= 1250) {
-      slideWidth = (document.documentElement.offsetWidth / 2);
-    } else if (currentScreenWidth <= 790) {
-      slideWidth = document.documentElement.offsetWidth;
+    let slideWidth = (carouselParentWidth / 3);
+
+    if (screenWidth > 790 && screenWidth <= 1250) {
+      slideWidth = (carouselParentWidth / 2);
+    } else if (screenWidth <= 790) {
+      slideWidth = carouselParentWidth;
     }
 
     carouselContainerWidth = slideWidth * (this.projects.length * 2);
 
-    this.carouselContainer.nativeElement.style.width = carouselContainerWidth + 'px';
+    this.carouselContainer.nativeElement.style.width = carouselContainerWidth.toFixed(0) + 'px';
   }
 
 
@@ -104,14 +110,16 @@ export class ProjectcarouselComponent implements OnInit {
   public next() {
 
     if (this.isAnimating) return;
-    let slideWidth = (<HTMLElement> this.carouselContainer.nativeElement.getElementsByClassName('project')[0]).offsetWidth;
+    let slideWidth = (<HTMLElement> this.carouselContainer.nativeElement.getElementsByClassName('project')[0]).getBoundingClientRect().width;
 
     if (this.currentSlideCount - 1 == ((this.projects.length * -1) - 1)) {
       let offsetSlideCount = 0;
       
       this.carouselContainer.nativeElement.animate([
-        {transform: 'translate3D(' + 0 + 'px, 0, 0)'}
-      ], {fill: 'both', duration: 0, delay: 0});
+        {transform: 'translateX(' + 0 + 'px)'}
+      ], {fill: 'both', duration: 0, delay: 0}).finished.then(() => {
+        this.carouselContainer.nativeElement.style.transform = 'translateX(' + 0 + 'px)';
+      });
 
       this.currentSlideCount = offsetSlideCount;
     }
@@ -135,8 +143,10 @@ export class ProjectcarouselComponent implements OnInit {
       let offsetTransition = (slideWidth * offsetSlideCount) + slideWidth;
 
       this.carouselContainer.nativeElement.animate([
-        {transform: 'translate3D(' + offsetTransition + 'px, 0, 0)'}
-      ], {fill: 'both', duration: 0});
+        {transform: 'translateX(' + offsetTransition + 'px)'}
+      ], {fill: 'both', duration: 0}).finished.then(() => {
+        this.carouselContainer.nativeElement.style.transform = 'translateX(' + offsetTransition + 'px)';
+      });
 
       this.currentSlideCount = offsetSlideCount + 1;
     }
@@ -150,8 +160,9 @@ export class ProjectcarouselComponent implements OnInit {
     this.isAnimating = true;
 
     this.carouselContainer.nativeElement.animate([
-      {transform: 'translate3D(' + slideAmount + 'px, 0, 0)'}
-    ], {fill: 'forwards', easing: 'ease-in-out', duration: 300}).finished.then(() => {
+      {transform: 'translateX(' + slideAmount + 'px)'}
+    ], {fill: 'both', easing: 'ease-in-out', duration: 300}).finished.then(() => {
+      this.carouselContainer.nativeElement.style.transform = 'translateX(' + slideAmount + 'px)';
       this.isAnimating = false;
     });
   }

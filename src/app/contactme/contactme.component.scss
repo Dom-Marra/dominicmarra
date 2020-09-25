@@ -1,0 +1,70 @@
+@import '../../styles.scss';
+
+#contact-me-container {
+    width: 85%;
+    margin: auto;
+    margin-top: 50px;
+
+    #contact-me-form {
+        margin-top: 5vh;
+        height: 100%;
+    }
+
+    .form-field {
+        width: 100%;
+    }
+
+    .mat-form-field .mat-input-element {
+        caret-color: mat-color($dominicmarra-accent);
+    }
+
+    .mat-form-field-invalid .mat-input-element {
+        caret-color: mat-color($dominicmarra-warn);
+    }
+
+    .mat-form-field-outline, .mat-form-field-outline-thick, .mat-form-field-label {
+        color: mat-color($dominicmarra-accent);
+    }
+
+    .mat-form-field-outline-start, .mat-form-field-outline-end {
+        border-radius: 0;
+    }
+
+    .mat-form-field-invalid.mat-form-field-invalid {
+
+        .mat-form-field-outline-thick, .mat-form-field-label {
+            color: mat-color($dominicmarra-warn);
+        }
+    }
+
+    #button-container {
+        width: 100%;
+        display: flex;
+        flex-direction: row;
+
+        #submit-button {
+            margin-left: auto;
+            color: white;
+            background-color: mat-color($dominicmarra-accent);
+            border-radius: 0;
+        }
+    }
+
+    #description-input {
+        height: 150px;
+        min-height: 50px;
+
+        &::-webkit-scrollbar {
+            width: 3px;
+        }
+
+        &:focus, &:hover {
+            &::-webkit-scrollbar-thumb {
+                border-radius: 5px;
+                box-shadow: inset 0 0 0 3px mat-color($dominicmarra-accent);
+                -webkit-box-shadow: inset 0 0 0 3px mat-color($dominicmarra-accent); 
+            }
+        }
+    }
+
+}

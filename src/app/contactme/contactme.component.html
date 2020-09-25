@@ -1,0 +1,20 @@
+<div id="contact-me-container">
+    <h2>Contact Me</h2>
+    <form #contactMe="ngForm" id="contact-me-form" novalidate>
+        <mat-form-field [hideRequiredMarker]="true" class="form-field" appearance="outline">
+            <mat-label>Email Address</mat-label>
+            <input matInput name="email" placeholder="example@email.com" ngModel required #email="ngModel" autocomplete="off">
+        </mat-form-field>
+        <mat-form-field [hideRequiredMarker]="true" class="form-field" appearance="outline">
+            <mat-label>Subject</mat-label>
+            <input matInput name="subject" placeholder="Subject" ngModel required #subject="ngModel" autocomplete="off">
+        </mat-form-field>
+        <mat-form-field [hideRequiredMarker]="true" class="form-field" appearance="outline">
+            <mat-label>Description</mat-label>
+            <textarea matInput name="description" placeholder="..." ngModel required #description="ngModel" autocomplete="off" id="description-input"></textarea>
+        </mat-form-field>
+        <div id="button-container">
+            <button id="submit-button" mat-button>Send</button>
+        </div>
+    </form>
+</div>

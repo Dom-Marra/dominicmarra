@@ -130,7 +130,8 @@ $dominicmarra-typography: mat-typography-config(
 @include angular-material-typography($dominicmarra-typography);
 
 html, body { 
-  height: 100%;
+  min-height: 100%;
+  //overflow-x: hidden;
 }
 
 body {  

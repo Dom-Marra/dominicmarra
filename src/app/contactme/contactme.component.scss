@@ -47,6 +47,18 @@
             color: white;
             background-color: mat-color($dominicmarra-accent);
             border-radius: 0;
+
+            &:hover {
+                color: lightblue;
+            }
+
+            &.mat-button-disabled {
+                background-color: lighten(mat-color($dominicmarra-accent), 20);
+
+                &:hover {
+                    color: white;
+                }
+            }
         }
     }
 

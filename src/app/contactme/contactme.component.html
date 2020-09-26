@@ -1,20 +1,23 @@
 <div id="contact-me-container">
     <h2>Contact Me</h2>
-    <form #contactMe="ngForm" id="contact-me-form" novalidate>
+    <form [formGroup]="contactForm" id="contact-me-form" (ngSubmit)="submitForm()">
         <mat-form-field [hideRequiredMarker]="true" class="form-field" appearance="outline">
             <mat-label>Email Address</mat-label>
-            <input matInput name="email" placeholder="example@email.com" ngModel required #email="ngModel" autocomplete="off">
+            <input matInput name="email" placeholder="example@email.com" autocomplete="off" formControlName="email">
+            <mat-error *ngIf="contactForm.controls['email'].invalid">{{getEmailError()}}</mat-error>
         </mat-form-field>
         <mat-form-field [hideRequiredMarker]="true" class="form-field" appearance="outline">
             <mat-label>Subject</mat-label>
-            <input matInput name="subject" placeholder="Subject" ngModel required #subject="ngModel" autocomplete="off">
+            <input matInput name="subject" placeholder="Subject" autocomplete="off" formControlName="subject">
+            <mat-error *ngIf="contactForm.controls['subject'].invalid">{{getSubjectError()}}</mat-error>
         </mat-form-field>
         <mat-form-field [hideRequiredMarker]="true" class="form-field" appearance="outline">
             <mat-label>Description</mat-label>
-            <textarea matInput name="description" placeholder="..." ngModel required #description="ngModel" autocomplete="off" id="description-input"></textarea>
+            <textarea matInput name="description" placeholder="..."  id="description-input" formControlName="description"></textarea>
+            <mat-error *ngIf="contactForm.controls['description'].invalid">{{getDescriptionError()}}</mat-error>
         </mat-form-field>
         <div id="button-container">
-            <button id="submit-button" mat-button>Send</button>
+            <button id="submit-button" mat-button [disabled]="!contactForm.valid">Send</button>
         </div>
     </form>
 </div>

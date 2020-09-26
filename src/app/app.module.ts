@@ -20,6 +20,7 @@ import { ProjectcardComponent } from './projectcard/projectcard.component';
 import { ProjectcarouselComponent } from './projectcarousel/projectcarousel.component';
 import { ProjectcardDetailsComponent } from './projectcard-details/projectcard-details.component';
 import { ContactmeComponent } from './contactme/contactme.component';
+import { FooterComponent } from './footer/footer.component';
 
 @NgModule({
   declarations: [
@@ -29,7 +30,8 @@ import { ContactmeComponent } from './contactme/contactme.component';
     ProjectcardComponent,
     ProjectcarouselComponent,
     ProjectcardDetailsComponent,
-    ContactmeComponent
+    ContactmeComponent,
+    FooterComponent
   ],
   imports: [
     BrowserModule,

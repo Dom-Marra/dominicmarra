@@ -1,32 +1,11 @@
 @import '../../styles.scss';
 
 .projectcard-details-header {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    h2 {
-        display: inline-block;
-        text-align: center;
-    }
-
-    .projectcard-links {
-        padding-left: 10px;
-
-        .projectcard-icon:hover {
-            color: lightskyblue;
-        }
-
-        fa-icon {
-            padding-left: 15px;
-        }
-    }
-    
+    text-align: center;
 }
 
 .cdk-global-scrollblock {
     position: static;
-    overflow: hidden !important;
   }
   
 .project-details-panel {
@@ -67,17 +46,17 @@
     
         .projectcard-images {
             margin: auto;
-            margin-top: 5%;
-            height: 325px;
-            width: 325px;
-            max-width: calc(100% * .75);
-            max-height: calc(100% * .75);
+            margin-top: 25px;
+            width: 60vw;
+            height: 60vw;
+            max-width: 325px;
+            max-height: 325px;
             background-color: black;
         }
     
         .projectcard-details {
             margin: auto;
-            margin-top: 5%;
+            margin-top: 25px;
             width: 95%;
             text-align: justify;
             overflow: visible;
@@ -86,7 +65,7 @@
         .project-technologies {
             position: relative;
             text-align: center;
-            margin-top: 5%;
+            margin-top: 25px;
         }
     
         .projectcard-icon {
@@ -97,6 +76,19 @@
             width: 40px;
             font-size: 25px;
         }
+    }
+}
+
+.projectcard-links {
+    font-size: 20px;
+    margin: auto;
+
+    .projectcard-icon:hover {
+        color: lightskyblue;
+    }
+
+    .github {
+        padding-left: 15px;
     }
 }
 

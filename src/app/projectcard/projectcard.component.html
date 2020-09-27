@@ -1,12 +1,12 @@
 <div class="projectcard-container"  (click)="openProjectDialog()" (mouseenter)="highlightCard(true)" (mouseleave)="highlightCard(false)">
     <div class="projectcard-front" [ngStyle]="{'background-color': this.project.getColor()}">
         <div class="projectcard-heading">
-            <h2 class="highlight-text">{{this.project.getName()}}</h2>
+            <h3 class="highlight-text">{{this.project.getName()}}</h3>
             <p class="projectcard-caption mat-caption highlight-text">{{this.project.getCaption()}}</p>
         </div>
         <div class="projectcard-image"></div>
         <div class="projectcard-expand highlight-text">
-            <p>About</p>
+            <p class="mat-caption">About</p>
         </div>
     </div>
 </div>

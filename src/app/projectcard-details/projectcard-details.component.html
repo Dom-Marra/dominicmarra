@@ -1,10 +1,4 @@
-<h2 mat-dialog-title #projectHeader class="projectcard-details-header">
-    {{this.project.getName()}}
-    <div class="projectcard-links">
-        <fa-icon [icon]="faGithub" class="projectcard-icon"></fa-icon>
-        <fa-icon [icon]="faLink" class="projectcard-icon"></fa-icon>
-    </div>
-</h2>
+<h3 mat-dialog-title class="projectcard-details-header">{{this.project.getName()}}</h3>
 
 <mat-dialog-content #projectDetails>
     <div class="project-details-container">
@@ -21,3 +15,10 @@
         </ngx-simplebar>
     </div>
 </mat-dialog-content>
+
+<mat-dialog-actions>
+    <div class="projectcard-links">
+        <fa-icon [icon]="faGithub" class="projectcard-icon"></fa-icon>
+        <fa-icon [icon]="faLink" class="projectcard-icon github"></fa-icon>
+    </div>
+</mat-dialog-actions>

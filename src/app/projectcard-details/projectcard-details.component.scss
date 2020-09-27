@@ -80,16 +80,23 @@
 }
 
 .projectcard-links {
-    font-size: 20px;
-    margin: auto;
+    font-size: 24px;
+    margin-right: auto;
 
     .projectcard-icon:hover {
         color: lightskyblue;
     }
 
     .github {
-        padding-left: 15px;
+        padding-left: 24px;
     }
+}
+
+.close-button {
+    color: white;
+    background-color: mat-color($dominicmarra-accent);
+    border-radius: 0;
+    margin-left: auto;
 }
 
 @media only screen and (max-width: 1250px) { 

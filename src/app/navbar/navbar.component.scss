@@ -35,9 +35,20 @@
         padding: 0;
         
         .nav-item {
+            display: flex;
+            align-items: center;
+            justify-content: center;
             position: relative;
             margin-right: 50px;
-            display: inline;
+            height: 100%;
+            outline: none;
+            transition: transform 0.15s ease-out;
+
+            &.active, &:hover{
+                transform: translateY(10px);
+                color: lightblue;
+            }
+            
         }
 
         .nav-item:hover {
@@ -45,6 +56,7 @@
         }
     }
 }
+
 
 @media only screen and (max-width: 790px) {
     #navbar-container {

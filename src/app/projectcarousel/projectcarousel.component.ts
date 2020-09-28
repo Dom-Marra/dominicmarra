@@ -9,8 +9,9 @@ import { faChevronRight, faChevronLeft } from '@fortawesome/free-solid-svg-icons
 })
 export class ProjectcarouselComponent implements OnInit {
 
-  @ViewChild('carousel') carouselParent: ElementRef;
-  @ViewChild('slides') carouselContainer: ElementRef;
+  @ViewChild('carousel') carousel: ElementRef;
+  @ViewChild('slidesContainer') slidesContainer: ElementRef;
+  @ViewChildren('slide', {read: ElementRef}) slide: QueryList<ElementRef>;
 
   @HostListener('window:resize')
   onResize() {
@@ -59,48 +60,43 @@ export class ProjectcarouselComponent implements OnInit {
   }
 
   /**
-   * Will reset the carousel width, and repositions it to the current slide
+   * Will adjust the carousel container width, and repositions the slides container to the current slide
    */
   public reinitCarouselView() {
 
-    this.setCarouselWidth();
+    this.setCarouselWidth();                                                        //adjust width of carousel container
 
-    let slideWidth = (<HTMLElement> this.carouselContainer.nativeElement.getElementsByClassName('project')[0]).getBoundingClientRect().width;
+    let slideWidth = this.slide.first.nativeElement.getBoundingClientRect().width;  //get width of a slide
 
-    let slideAmount = slideWidth * this.currentSlideCount;
+    let slideAmount = slideWidth * this.currentSlideCount;                          //get amount to transition the slides container
 
-    this.carouselContainer.nativeElement.animate([
-      {transform: 'translateX(' + slideAmount + 'px)'}
-    ], {fill: 'both', duration: 0}).finished.then(() => {
-      this.carouselContainer.nativeElement.style.transform = 'translateX(' + slideAmount + 'px)';
-    })
+    this.animateMovement(slideAmount, true);                                        //transition the slides container
   }
 
-  
 
   /**
-   * Sets the width of the carousel
+   * Sets the width of the carousel container
    */
   public setCarouselWidth() {
 
-    let carouselContainerWidth = 0;
-    let screenWidth = document.documentElement.offsetWidth;
-    let carouselContStyle = window.getComputedStyle(<HTMLElement> this.carouselParent.nativeElement);
-    let carouselParentWidth = parseFloat(carouselContStyle.width)
-                            - parseFloat(carouselContStyle.paddingLeft)
-                            - parseFloat(carouselContStyle.paddingRight);
+    let slidesContainerWidth = 0;                                                                 //width of div that holds slides
+    let screenWidth = document.documentElement.offsetWidth;                                       //browser width
+    let carouselContStyle = window.getComputedStyle(<HTMLElement> this.carousel.nativeElement);   //styles of the carousel wrapper div
+    let carouselWidth = parseFloat(carouselContStyle.width)                                       //get width of the carousel wrapper div
+                      - parseFloat(carouselContStyle.paddingLeft)
+                      - parseFloat(carouselContStyle.paddingRight);
 
-    let slideWidth = (carouselParentWidth / 3);
+    let slideWidth = (carouselWidth / 3);             //initial slide width is a third of wrapper width
 
-    if (screenWidth > 790 && screenWidth <= 1250) {
-      slideWidth = (carouselParentWidth / 2);
+    if (screenWidth > 790 && screenWidth <= 1250) {   //adjust slide width on screen width
+      slideWidth = (carouselWidth / 2);
     } else if (screenWidth <= 790) {
-      slideWidth = carouselParentWidth;
+      slideWidth = carouselWidth;
     }
 
-    carouselContainerWidth = slideWidth * (this.projects.length * 2);
+    slidesContainerWidth = slideWidth * (this.projects.length * 2);   //calculate slides container width to account for double the amount of slides
 
-    this.carouselContainer.nativeElement.style.width = carouselContainerWidth.toFixed(0) + 'px';
+    this.slidesContainer.nativeElement.style.width = slidesContainerWidth.toFixed(0) + 'px';  //set inline width of slides container
   }
 
 
@@ -109,24 +105,20 @@ export class ProjectcarouselComponent implements OnInit {
    */
   public next() {
 
-    if (this.isAnimating) return;
-    let slideWidth = (<HTMLElement> this.carouselContainer.nativeElement.getElementsByClassName('project')[0]).getBoundingClientRect().width;
+    if (this.isAnimating) return;                                                   //return if currently animating
+    let slideWidth = this.slide.first.nativeElement.getBoundingClientRect().width;  //get width of a slide
 
-    if (this.currentSlideCount - 1 == ((this.projects.length * -1) - 1)) {
+    if (this.currentSlideCount - 1 == ((this.projects.length * -1) - 1)) {          //once the end is reached reset to the first slide
       let offsetSlideCount = 0;
-      
-      this.carouselContainer.nativeElement.animate([
-        {transform: 'translateX(' + 0 + 'px)'}
-      ], {fill: 'both', duration: 0, delay: 0}).finished.then(() => {
-        this.carouselContainer.nativeElement.style.transform = 'translateX(' + 0 + 'px)';
-      });
 
-      this.currentSlideCount = offsetSlideCount;
+      this.animateMovement(0, true);
+      
+      this.currentSlideCount = offsetSlideCount;                                    //reset the slide count
     }
 
-    let slideAmount = (slideWidth * this.currentSlideCount--) - slideWidth;
+    let slideAmount = (slideWidth * this.currentSlideCount--) - slideWidth;         //calculate the amount to slide by and update the counter
 
-    this.animateMovement(slideAmount);
+    this.animateMovement(slideAmount);                                              //transition the slides container
   }
 
   /**
@@ -134,36 +126,38 @@ export class ProjectcarouselComponent implements OnInit {
    */
   public previous() {
     
-    if (this.isAnimating) return;
+    if (this.isAnimating) return;                                                   //return if currently animating
     
-    let slideWidth = (<HTMLElement> this.carouselContainer.nativeElement.getElementsByClassName('project')[0]).offsetWidth;
+    let slideWidth = this.slide.first.nativeElement.getBoundingClientRect().width;  //get width of a slide
 
-    if (this.currentSlideCount + 1 == 1) {
+    if (this.currentSlideCount + 1 == 1) {                                          //if slide reaches the start move to end - 1 (account for movement)
       let offsetSlideCount = ((this.projects.length * -1) - 1);
-      let offsetTransition = (slideWidth * offsetSlideCount) + slideWidth;
+      let offsetTransition = (slideWidth * offsetSlideCount) + slideWidth;          //calc slide amount
 
-      this.carouselContainer.nativeElement.animate([
-        {transform: 'translateX(' + offsetTransition + 'px)'}
-      ], {fill: 'both', duration: 0}).finished.then(() => {
-        this.carouselContainer.nativeElement.style.transform = 'translateX(' + offsetTransition + 'px)';
-      });
+      this.animateMovement(offsetTransition, true);                                 //transition the slides container
 
-      this.currentSlideCount = offsetSlideCount + 1;
+      this.currentSlideCount = offsetSlideCount + 1;                                //adjust the slide container
     }
 
-    let slideAmount = (slideWidth * this.currentSlideCount++) + slideWidth;
+    let slideAmount = (slideWidth * this.currentSlideCount++) + slideWidth;         //calc slide amount
     
-    this.animateMovement(slideAmount);
+    this.animateMovement(slideAmount);                                              //transition the slide container
   }
 
-  public animateMovement(slideAmount: number) {
-    this.isAnimating = true;
+  /**
+   * Transitions the carousel
+   * 
+   * @param slideAmount 
+   *        amount to transition by
+   */
+  public animateMovement(slideAmount: number, instant?: boolean) {
+    this.isAnimating = true;                                          //set animating
 
-    this.carouselContainer.nativeElement.animate([
+    this.slidesContainer.nativeElement.animate([
       {transform: 'translateX(' + slideAmount + 'px)'}
-    ], {fill: 'both', easing: 'ease-in-out', duration: 300}).finished.then(() => {
-      this.carouselContainer.nativeElement.style.transform = 'translateX(' + slideAmount + 'px)';
-      this.isAnimating = false;
+    ], {fill: 'both', easing: 'ease-in-out', duration: instant ? 0 : 300}).finished.then(() => {
+      this.slidesContainer.nativeElement.style.transform = 'translateX(' + slideAmount + 'px)';       //adjust inline style
+      this.isAnimating = false;                                                                       //animation is complete
     });
   }
 

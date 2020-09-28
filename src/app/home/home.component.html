@@ -1,5 +1,5 @@
 <div id="home-container">
-    <div appActiveFragment [offset]="navOffsetHeight" id="about-me-container">
+    <div appActiveFragment [offset]="navOffsetHeight" [disableScrollListener]="disableScrollUntilTop" id="about-me-container">
         <div id="about-me-contents">
             <div id="about-me-img" aria-label="about me image"></div>
             <div id="about-me-text-container">
@@ -10,10 +10,10 @@
             </div>
         </div>
     </div>
-    <div appActiveFragment [offset]="navOffsetHeight" id="my-projects" class="home-component">
+    <div appActiveFragment [offset]="navOffsetHeight" [disableScrollListener]="disableScrollUntilTop" id="my-projects" class="home-component">
         <app-projectcarousel></app-projectcarousel>
     </div>
-    <div appActiveFragment [offset]="navOffsetHeight" id="contact-me" class="home-component">
+    <div appActiveFragment [offset]="navOffsetHeight" [disableScrollListener]="disableScrollUntilTop" id="contact-me" class="home-component">
         <app-contactme></app-contactme>
     </div>
 </div>

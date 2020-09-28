@@ -10,12 +10,22 @@ import { filter } from 'rxjs/operators';
 
 export class HomeComponent implements OnInit {
 
+  @HostListener('window:scroll')
+  onScroll() {
+    if (Math.floor(window.scrollY) == Math.floor(this.top)) {
+      this.disableScrollUntilTop = false;                      //once the smooth scroll is complete re-enable active fragment listening
+    }
+  }
+
   @HostListener('window:resize')
   onResize() {
     this.setNavOffset();
   }
 
-  public navOffsetHeight: number;
+  public navOffsetHeight: number;                       
+
+  public disableScrollUntilTop: boolean = false;               //disables active directive scroll listening
+  public top: number = 0;                                      //window scrollY value until active directive scroll can be re-enabled 
 
   constructor(private router: Router) { 
 
@@ -30,6 +40,8 @@ export class HomeComponent implements OnInit {
                 - this.navOffsetHeight 
                 + window.scrollY;
         window.scrollTo({behavior: "smooth", top: top});
+        this.disableScrollUntilTop = true;                              //disable scrolling listener in the active fragment directive
+        this.top = top;                                                 //set the top value to re-enable scroll listening
       }
       
     });

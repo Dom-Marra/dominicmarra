@@ -16,6 +16,12 @@ export class FooterComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  /**
+   * Opens a link
+   * 
+   * @param url 
+   *        url to open
+   */
   public openLink(url: string): void {
     window.open(url, 'newWin');
   }

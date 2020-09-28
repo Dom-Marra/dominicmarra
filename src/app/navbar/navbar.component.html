@@ -1,8 +1,8 @@
-<div [@shrinkEnlarge]="{value: this.navBarSize, params: {navBarHeight: this.navBarCurrentHeight }}" id="navbar-container">
+<div #navContainer [@shrinkEnlarge]="{value: this.navBarSize, params: {navBarHeight: this.navBarCurrentHeight }}" id="navbar-container">
     <h1 id="navbar-name">Dominic Marra</h1>
     <ul id="nav-items" class="mat-subheading-2">
-        <li [@downUp]="this.navItems[0].state" (mouseover)="hoverNavLink(0)" (mouseout)="leaveNavLink(0)" class="nav-item">About Me</li>
-        <li [@downUp]="this.navItems[1].state" (mouseover)="hoverNavLink(1)" (mouseout)="leaveNavLink(1)" class="nav-item">Projects</li>
-        <li [@downUp]="this.navItems[2].state" (mouseover)="hoverNavLink(2)" (mouseout)="leaveNavLink(2)" class="nav-item">Contact Me</li>
+        <li class="nav-item" routerLink='/home' fragment="about-me-container" [class.active]="(activeFragment | async) === 'about-me-container'">About Me</li>
+        <li class="nav-item" routerLink='/home' fragment="my-projects" [class.active]="(activeFragment | async) === 'my-projects'">Projects</li>
+        <li class="nav-item" routerLink='/home' fragment="contact-me"  [class.active]="(activeFragment | async) === 'contact-me'">Contact Me</li>
     </ul>
 </div>

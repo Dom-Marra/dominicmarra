@@ -4,8 +4,9 @@
         <div class="slides-container">
             <fa-icon class="carousel-next" (click)="next()" [icon]="faChevronRight">next</fa-icon>
             <fa-icon class="carousel-previous" (click)="previous()" [icon]="faChevronLeft">previous</fa-icon>
-            <div #slides class="carousel-slides">
+            <div #slidesContainer class="carousel-slides">
                 <app-projectcard 
+                    #slide
                     *ngFor="let project of projects; let i = index" 
                     class="project original" 
                     [project]="project"></app-projectcard>

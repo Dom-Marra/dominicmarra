@@ -60,10 +60,14 @@ export class NavbarComponent implements OnInit {
   public navBarCurrentHeight: number;     //current height of the navbar
   public lastWindowSize: number;          //last known window size
 
-  public activeFragment: BehaviorSubject<string>;     //Observable of current fragment in view
+  public activeFragment: string;                  //Observable of current fragment in view
   
   constructor(private fragService: ActiveFragService) { 
-    this.activeFragment = this.fragService.activeFragment;
+    this.fragService.activeFragment.subscribe(frag => {
+      if (!frag.getWasRouted() && frag.getFragment() != this.activeFragment) {
+        this.activeFragment = frag.getFragment();
+      }
+    });
   }
 
 

@@ -6,11 +6,15 @@ import { ActiveFragService } from './active-frag.service';
 })
 export class ActiveFragmentDirective { 
 
+  @Input() disableScrollListener: boolean = false;      //Whether the directive should listen on scroll events
+
   @Input() offset: number = 0;                          //amount to offset from the top
   
   @HostListener('window:scroll')
   onScroll() {
+    if (!this.disableScrollListener) {
       this.setActiveFragment();                         //update if the component is in view on scroll
+    }                                                         
   }
 
   @HostListener('window:resize')
@@ -34,7 +38,7 @@ export class ActiveFragmentDirective {
       let compBottom = compTop + this.el.nativeElement.offsetHeight;  //components bottom value
 
       //calculate if the top portion of the window is within component
-      if (Math.ceil(window.scrollY) + this.offset > compTop && compBottom > Math.ceil(window.scrollY) + this.offset) {
+      if (Math.ceil(window.scrollY) + this.offset + 50 > compTop && compBottom > Math.ceil(window.scrollY) + this.offset + 50) {
         this.fragService.setActiveFrag(this.el.nativeElement.id);     //update frag service active fragment
       } 
   }

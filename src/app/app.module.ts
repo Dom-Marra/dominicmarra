@@ -21,6 +21,7 @@ import { ProjectcarouselComponent } from './projectcarousel/projectcarousel.comp
 import { ProjectcardDetailsComponent } from './projectcard-details/projectcard-details.component';
 import { ContactmeComponent } from './contactme/contactme.component';
 import { FooterComponent } from './footer/footer.component';
+import { ActiveFragmentDirective } from './active-fragment.directive';
 
 @NgModule({
   declarations: [
@@ -31,7 +32,8 @@ import { FooterComponent } from './footer/footer.component';
     ProjectcarouselComponent,
     ProjectcardDetailsComponent,
     ContactmeComponent,
-    FooterComponent
+    FooterComponent,
+    ActiveFragmentDirective
   ],
   imports: [
     BrowserModule,

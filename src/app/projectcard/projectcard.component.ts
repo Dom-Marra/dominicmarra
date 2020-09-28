@@ -11,7 +11,7 @@ import { ProjectcardDetailsComponent } from '../projectcard-details/projectcard-
 
 export class ProjectcardComponent implements OnInit {
 
-  @Input() project: Project;
+  @Input() project: Project;    //The project that belongs to this component
 
   constructor(private eleRef: ElementRef, private dialog: MatDialog) { }
 

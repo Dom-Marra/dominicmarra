@@ -1,6 +1,5 @@
 import { Component, HostListener, OnInit } from '@angular/core';
-import { Router, RoutesRecognized } from '@angular/router';
-import { filter } from 'rxjs/operators';
+import { ActiveFragService } from '../active-frag.service';
 
 @Component({
   selector: 'app-home',
@@ -10,13 +9,6 @@ import { filter } from 'rxjs/operators';
 
 export class HomeComponent implements OnInit {
 
-  @HostListener('window:scroll')
-  onScroll() {
-    if (Math.floor(window.scrollY) == Math.floor(this.top)) {
-      this.disableScrollUntilTop = false;                      //once the smooth scroll is complete re-enable active fragment listening
-    }
-  }
-
   @HostListener('window:resize')
   onResize() {
     this.setNavOffset();
@@ -24,32 +16,31 @@ export class HomeComponent implements OnInit {
 
   public navOffsetHeight: number;                       
 
-  public disableScrollUntilTop: boolean = false;               //disables active directive scroll listening
   public top: number = 0;                                      //window scrollY value until active directive scroll can be re-enabled 
 
-  constructor(private router: Router) { 
+  constructor(private fragService: ActiveFragService) { 
 
-    //Scroll to an related element based on the routed fragment
-    this.router.events.pipe(filter(event => event instanceof RoutesRecognized))
-    .subscribe((route: RoutesRecognized) => {
+    this.fragService.activeFragment.subscribe(activeFrag => {
+    
+      if (activeFrag.getWasRouted()) {
+        let el = document.querySelector('#' + activeFrag.getFragment());  //element to scroll to
 
-      let el = document.querySelector('#' + route.state.root.fragment); //element to scroll to
-
-      if (el != null) {                                                 //only scroll if an element was found
-        let top = el.getBoundingClientRect().top                        //calculate the scroll amount
-                - this.navOffsetHeight 
-                + window.scrollY;
-        window.scrollTo({behavior: "smooth", top: top});
-        this.disableScrollUntilTop = true;                              //disable scrolling listener in the active fragment directive
-        this.top = top;                                                 //set the top value to re-enable scroll listening
+        if (el != null) {                                                 //only scroll if an element was found
+          let top = Math.ceil(el.getBoundingClientRect().top              //calculate the scroll amount
+                  - this.navOffsetHeight 
+                  + window.scrollY);
+                  
+          try {
+            window.scrollTo({behavior: "smooth", top: top});
+          } catch (e) {
+            window.scrollTo(0, top);
+          }
+        }
       }
-      
     });
   }
 
-  ngOnInit(): void {
-
-  }
+  ngOnInit(): void { }
 
   ngAfterContentInit(): void {
     this.setNavOffset();

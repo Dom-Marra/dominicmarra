@@ -1,7 +1,6 @@
 import { Component, OnInit, HostListener, ViewChild, ElementRef } from '@angular/core';
 import { trigger, state, style, animate, transition } from '@angular/animations';
 import { ActiveFragService } from '../active-frag.service';
-import { BehaviorSubject } from 'rxjs';
 
 @Component({
   selector: 'app-navbar',
@@ -25,33 +24,12 @@ export class NavbarComponent implements OnInit {
 
   @ViewChild('navContainer') navContainer: ElementRef;      //Nav container element
 
-  @HostListener('window:scroll') 
-  onScroll() {
-
-    //Set navbar state depending on scroll position
-    if (Math.floor(window.scrollY) > 90 && this.navBarSize == "large") {
-      this.navBarSize = 'small';
-      this.setNavBarHeight();
-    } else if (Math.floor(window.scrollY) < 75 && this.navBarSize == "small") {
-      this.navBarSize = 'large';
-      this.setNavBarHeight();
-    }
-
+  @HostListener('window:scroll') onScroll(): void {
+    this.setNavBarState();
   }
 
   @HostListener('window:resize') onResize(e: Event): void {
-
-    //Set the navabr height based on window size
-    if (window.innerWidth > 790 && this.lastWindowSize <= 790) {
-      this.navBarBaseHeight = 90;
-      this.lastWindowSize = window.innerWidth;
-      this.setNavBarHeight();
-    } else if (window.innerWidth <= 790 && this.lastWindowSize > 790) {
-      this.navBarBaseHeight = 110;
-      this.lastWindowSize = window.innerWidth;
-      this.setNavBarHeight();
-    }
-
+    this.setNavBarBaseHeight();
   }
 
   
@@ -68,6 +46,10 @@ export class NavbarComponent implements OnInit {
         this.activeFragment = frag.getFragment();
       }
     });
+
+    this.setNavBarBaseHeight();
+    this.setNavBarState();
+    console.log(this.navBarBaseHeight);
   }
 
 
@@ -75,7 +57,7 @@ export class NavbarComponent implements OnInit {
     this.lastWindowSize = window.innerWidth;
   }
 
-  ngAfterViewInit() {
+  ngAfterViewInit(): void {
     this.navBarBaseHeight = this.navContainer.nativeElement.offsetHeight;
   }
 
@@ -83,7 +65,7 @@ export class NavbarComponent implements OnInit {
    * Sets the navbar containers height, which is used as a parameter in its
    * animations
    */
-  setNavBarHeight() {
+  private setNavBarHeight(): void {
 
     switch (this.navBarSize) {
       case "large" : {
@@ -95,6 +77,35 @@ export class NavbarComponent implements OnInit {
         break;
       }
     } 
+  }
+
+  /**
+   * Set navbar state depending on scroll position
+   */
+  private setNavBarState(): void {
+
+    if (Math.floor(window.scrollY) > 90 && this.navBarSize == "large") {
+      this.navBarSize = 'small';
+      this.setNavBarHeight();
+    } else if (Math.floor(window.scrollY) < 75 && this.navBarSize == "small") {
+      this.navBarSize = 'large';
+      this.setNavBarHeight();
+    }
+  }
+
+  /**
+   * Set the navbar height based on window size
+   */
+  private setNavBarBaseHeight(): void {
+    if (window.innerWidth > 790 && (this.lastWindowSize <= 790 || this.lastWindowSize == null)) {
+      this.navBarBaseHeight = 90;
+      this.lastWindowSize = window.innerWidth;
+      this.setNavBarHeight();
+    } else if (window.innerWidth <= 790 && (this.lastWindowSize > 790 || this.lastWindowSize == null)) {
+      this.navBarBaseHeight = 110;
+      this.lastWindowSize = window.innerWidth;
+      this.setNavBarHeight();
+    }
   }
 
 }

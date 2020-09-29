@@ -32,8 +32,7 @@ export class Project {
                 private images: Array<string>,
                 private technologies: Array<Technologies>,
                 private projectLink: String,
-                private gitHubLink: String,
-                private font: String) { 
+                private gitHubLink: String) { 
     }
 
     /**
@@ -185,17 +184,5 @@ export class Project {
     public getGithubLink(): String {
         return this.gitHubLink;
     }
-
-    /**
-     * Returns the url of the font to use for the projects header
-     * 
-     * @returns Url as String
-     */
-    public getFont(): String {
-        return this.font;
-    }
-
-
-
-
+    
 }

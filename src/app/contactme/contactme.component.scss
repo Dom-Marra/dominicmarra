@@ -15,15 +15,15 @@
     }
 
     .mat-form-field .mat-input-element {
-        caret-color: mat-color($dominicmarra-accent);
+        caret-color: mat-color($dominicmarra-accent, 50);
     }
 
     .mat-form-field-invalid .mat-input-element {
-        caret-color: mat-color($dominicmarra-warn);
+        caret-color: mat-color($dominicmarra-warn, 50);
     }
 
     .mat-form-field-outline, .mat-form-field-outline-thick, .mat-form-field-label {
-        color: mat-color($dominicmarra-accent);
+        color: mat-color($dominicmarra-accent, 50);
     }
 
     .mat-form-field-outline-start, .mat-form-field-outline-end {
@@ -33,8 +33,12 @@
     .mat-form-field-invalid.mat-form-field-invalid {
 
         .mat-form-field-outline-thick, .mat-form-field-label {
-            color: mat-color($dominicmarra-warn);
+            color: mat-color($dominicmarra-warn, 50);
         }
+    }
+
+    .mat-error {
+        color: mat-color($dominicmarra-warn, 50);
     }
 
     #button-container {
@@ -44,19 +48,19 @@
 
         #submit-button {
             margin-left: auto;
-            color: white;
-            background-color: mat-color($dominicmarra-accent);
+            color: mat-color($dominicmarra-primary, 50);;
+            background-color: mat-color($dominicmarra-accent, 50);
             border-radius: 0;
 
             &:hover {
-                color: lightblue;
+                color: mat-color($dominicmarra-accent, '50-contrast');
             }
 
             &.mat-button-disabled {
-                background-color: lighten(mat-color($dominicmarra-accent), 20);
+                background-color: mat-color($dominicmarra-accent, 400);
 
                 &:hover {
-                    color: white;
+                    color: mat-color($dominicmarra-primary, 50);
                 }
             }
         }
@@ -73,8 +77,8 @@
         &:focus, &:hover {
             &::-webkit-scrollbar-thumb {
                 border-radius: 5px;
-                box-shadow: inset 0 0 0 3px mat-color($dominicmarra-accent);
-                -webkit-box-shadow: inset 0 0 0 3px mat-color($dominicmarra-accent); 
+                box-shadow: inset 0 0 0 3px mat-color($dominicmarra-accent, 50);
+                -webkit-box-shadow: inset 0 0 0 3px mat-color($dominicmarra-accent, 50); 
             }
         }
     }

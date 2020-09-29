@@ -4,10 +4,10 @@
     margin-top: 50px;
     width: 100%;
     height: 200px;
-    background-color: lighten(mat-color($dominicmarra-accent), 7);
+    background-color: mat-color($dominicmarra-accent, 100);
 
     #footer-name {
-        color: mat-color($dominicmarra-primary);
+        color: mat-color($dominicmarra-primary, 50);
         padding-top: 70px;
         text-align: center;
     }
@@ -18,12 +18,12 @@
         width: auto;
 
         .myLink {
-            color: mat-color($dominicmarra-primary);
+            color: mat-color($dominicmarra-primary, 50);
             font-size: 25px;
         }
 
         .myLink:hover {
-            color: lightblue;
+            color: mat-color($dominicmarra-accent, '50-contrast');
             cursor: pointer;
         }
 

@@ -42,7 +42,6 @@
     .projectcard-details {
         width: 100%;
         height: 100%;
-        background-color: white;
     
         .projectcard-images {
             margin: auto;
@@ -93,8 +92,8 @@
 }
 
 .close-button {
-    color: white;
-    background-color: mat-color($dominicmarra-accent);
+    color: mat-color($dominicmarra-primary, 50);
+    background-color: mat-color($dominicmarra-accent, 50);
     border-radius: 0;
     margin-left: auto;
 }

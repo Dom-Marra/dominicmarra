@@ -1,0 +1,21 @@
+<div id="login-wrapper">
+    <div id="login-form-container">
+        <h2>Login</h2>
+        <form [formGroup]="loginForm" id="login-form" (ngSubmit)="submitForm()">
+            <mat-form-field [hideRequiredMarker]="true" class="form-field" appearance="outline">
+                <mat-label>Email Address</mat-label>
+                <input matInput name="email" placeholder="example@email.com" autocomplete="off" formControlName="email">
+                <mat-error *ngIf="loginForm.controls['email'].invalid">{{getEmailError()}}</mat-error>
+            </mat-form-field>
+            <mat-form-field [hideRequiredMarker]="true" class="form-field" appearance="outline">
+                <mat-label>Password</mat-label>
+                <input matInput name="password" placeholder="Password" autocomplete="off" formControlName="password" type="password">
+                <mat-error *ngIf="loginForm.controls['password'].invalid">{{getPasswordError()}}</mat-error>
+            </mat-form-field>
+            <div id="button-container">
+                <button id="submit-button" mat-button [disabled]="!loginForm.valid">Login</button>
+            </div>
+            <mat-error *ngIf="formError != null">{{formError}}</mat-error>
+        </form>
+    </div>
+</div>

@@ -1,0 +1,11 @@
+{
+  "targets": {
+    "dominicmarra-95b72": {
+      "hosting": {
+        "dominicmarra": [
+          "dominicmarra-95b72"
+        ]
+      }
+    }
+  }
+}

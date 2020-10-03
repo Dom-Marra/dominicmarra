@@ -11,6 +11,8 @@
   },
   "private": true,
   "dependencies": {
+    "@angular-material-components/color-picker": "^4.0.2",
+    "@angular-material-components/file-input": "^4.0.1",
     "@angular/animations": "~10.1.1",
     "@angular/cdk": "^10.2.0",
     "@angular/common": "~10.1.1",
@@ -27,11 +29,11 @@
     "@fortawesome/free-brands-svg-icons": "^5.14.0",
     "@fortawesome/free-solid-svg-icons": "^5.14.0",
     "@types/overlayscrollbars": "^1.12.0",
+    "firebase": "^7.22.0",
     "rxjs": "~6.6.0",
     "simplebar-angular": "^3.0.0-beta.5",
     "tslib": "^2.0.0",
-    "zone.js": "~0.10.2",
-    "firebase": "^7.13.1"
+    "zone.js": "~0.10.2"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "~0.1001.1",

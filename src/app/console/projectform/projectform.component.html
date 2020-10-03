@@ -1,0 +1,71 @@
+<form [formGroup]="projectForm" id="project-form" (ngSubmit)="submitForm()">
+
+    <div id="image-inputs-container">
+        
+        <div id="thumbnail-input-container" class="image-input-container">
+            <label for="thumbnail">Upload Thumbnail</label>
+            <div id="thumbnail-image" class="image-display">
+                <div #thumbnail class="image-preview"></div>
+            </div>
+            <mat-form-field class="form-field" appearance="outline">
+                <ngx-mat-file-input formControlName="thumbnail" [multiple]="false" 
+                name="thumbnail" (change)="displayThumbnail($event)" [accept]="'image/*'" required>
+                </ngx-mat-file-input>
+                <mat-error *ngIf="projectForm.controls.thumbnail.invalid">{{ getThumbnailErrors() }}</mat-error>
+            </mat-form-field>
+        </div>
+
+        <div id="images-input-container" class="image-input-container">
+            <label for="images">Upload Image(s)</label>
+            <div id="images" class="image-display">
+                <ngx-simplebar id="images-simplebar">
+                    <div #images class="image-preview" *ngFor="let image of images" [ngStyle]="{'background-image': 'url(' + image + ')'}"></div>
+                </ngx-simplebar>
+            </div>
+            <mat-form-field class="form-field" appearance="outline">
+                <ngx-mat-file-input name="images" formControlName="images" 
+                (change)="displayImages($event)" [multiple]="true" [accept]="'image/*'" required>
+                </ngx-mat-file-input>
+                <mat-error *ngIf="projectForm.controls.images.invalid">{{ getImagesErrors() }}</mat-error>
+            </mat-form-field>
+        </div>
+    </div>
+    
+    <div id="non-image-inputs">
+        <mat-form-field [hideRequiredMarker]="true" class="form-field" appearance="outline">
+            <mat-label>Name</mat-label>
+            <input matInput name="name" placeholder="Project Name" autocomplete="off" formControlName="name">
+            <mat-error *ngIf="projectForm.controls.name.invalid">Please input a name</mat-error>
+        </mat-form-field>
+        <mat-form-field [hideRequiredMarker]="true" class="form-field" appearance="outline">
+            <mat-label>Caption</mat-label>
+            <input matInput name="caption" placeholder="Project Caption" autocomplete="off" formControlName="caption">
+            <mat-error *ngIf="projectForm.controls.caption.invalid">Please input a caption</mat-error>
+        </mat-form-field>
+        <mat-form-field [hideRequiredMarker]="true" class="form-field" appearance="outline">
+            <mat-label>GitHub Link </mat-label>
+            <input matInput name="githublink" placeholder="www.github.com" autocomplete="off" formControlName="githublink">
+        </mat-form-field>
+        <mat-form-field [hideRequiredMarker]="true" class="form-field" appearance="outline">
+            <mat-label>Website Link </mat-label>
+            <input matInput name="projectlink" placeholder="www.website.com" autocomplete="off" formControlName="projectlink">
+        </mat-form-field>
+        <mat-form-field [hideRequiredMarker]="true" class="form-field" appearance="outline">
+            <mat-label>Technologies</mat-label>
+            <mat-select matInput name="technologies" class="custom-select" panelClass="custom-select" placeholder="Select Tech" autocomplete="off" formControlName="technologies" multiple>
+                <mat-option *ngFor="let tech of techKeys()" [value]="tech">{{tech}}</mat-option>
+            </mat-select>
+            <mat-error *ngIf="projectForm.controls.technologies.invalid">Please select at least one technology</mat-error>
+        </mat-form-field>
+        <mat-form-field class="form-field mat-adjusted" appearance="outline">
+            <mat-label>Project Color </mat-label>
+            <input matInput [ngxMatColorPicker]="picker" formControlName="color" autocomplete="off">
+            <ngx-mat-color-toggle matSuffix [for]="picker"></ngx-mat-color-toggle>
+            <ngx-mat-color-picker #picker [touchUi]="touchUi" [color]="color"></ngx-mat-color-picker>
+            <mat-error *ngIf="projectForm.controls.color.invalid">Invalid Color</mat-error>
+        </mat-form-field>
+        <div id="button-container">
+            <button id="submit-button" mat-button [disabled]="!projectForm.valid">Add</button>
+        </div>
+    </div>
+</form>

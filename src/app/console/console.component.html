@@ -1,0 +1,25 @@
+<div id="console-container">
+    <div #sideNav id="side-nav">
+        <ul>
+            <li routerLink="/console/addproject" routerLinkActive="active">
+                <fa-icon [icon]="faPlusSquare" class="nav-icon"></fa-icon>
+                <p class="nav-text">Add Project</p>
+            </li>
+            <li routerLink="/console/deleteproject" routerLinkActive="active">
+                <fa-icon [icon]="faTrashAlt" class="nav-icon"></fa-icon>
+                <p class="nav-text">Delete Project</p>
+            </li>
+            <li routerLink="/console/updateproject" routerLinkActive="active">
+                <fa-icon [icon]="faEdit" class="nav-icon"></fa-icon>
+                <p class="nav-text">Update Project</p>
+            </li>
+            <li (click)="logout()">
+                <fa-icon [icon]="faSignOutAlt" class="nav-icon"></fa-icon>
+               <p class="nav-text">Logout</p>
+            </li>
+        </ul>
+    </div>
+    <div id="routed-content">
+        <router-outlet></router-outlet>
+    </div>
+</div>

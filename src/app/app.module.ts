@@ -4,7 +4,11 @@ import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field'
-import { MatButtonModule } from '@angular/material/button'
+import { MatButtonModule } from '@angular/material/button';
+import {MatSelectModule} from '@angular/material/select';
+
+import { NgxMatFileInputModule } from '@angular-material-components/file-input';
+import { MAT_COLOR_FORMATS, NgxMatColorPickerModule, NGX_MAT_COLOR_FORMATS, MatColorFormats } from '@angular-material-components/color-picker'
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -14,6 +18,9 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { MatDialogModule } from "@angular/material/dialog";
 import { SimplebarAngularModule } from 'simplebar-angular';
 
+import { AngularFireModule } from '@angular/fire';
+import { environment } from '../environments/environment';
+
 import { NavbarComponent } from './navbar/navbar.component';
 import { HomeComponent } from './home/home.component';
 import { ProjectcardComponent } from './projectcard/projectcard.component';
@@ -22,6 +29,18 @@ import { ProjectcardDetailsComponent } from './projectcard-details/projectcard-d
 import { ContactmeComponent } from './contactme/contactme.component';
 import { FooterComponent } from './footer/footer.component';
 import { ActiveFragmentDirective } from './active-fragment.directive';
+import { LoginComponent } from './login/login.component';
+import { ConsoleComponent } from './console/console.component';
+import { AddprojectComponent } from './console/addproject/addproject.component';
+import { UpdateprojectComponent } from './console/updateproject/updateproject.component';
+import { DeleteprojectComponent } from './console/deleteproject/deleteproject.component';
+import { ProjectformComponent } from './console/projectform/projectform.component';
+
+export const CUSTOM_MAT_COLOR_FORMATS: MatColorFormats = {
+  display: {
+      colorInput: 'hex'
+  }
+}
 
 @NgModule({
   declarations: [
@@ -33,7 +52,13 @@ import { ActiveFragmentDirective } from './active-fragment.directive';
     ProjectcardDetailsComponent,
     ContactmeComponent,
     FooterComponent,
-    ActiveFragmentDirective
+    ActiveFragmentDirective,
+    LoginComponent,
+    ConsoleComponent,
+    AddprojectComponent,
+    UpdateprojectComponent,
+    DeleteprojectComponent,
+    ProjectformComponent
   ],
   imports: [
     BrowserModule,
@@ -45,9 +70,14 @@ import { ActiveFragmentDirective } from './active-fragment.directive';
     ReactiveFormsModule,
     MatInputModule,
     MatFormFieldModule,
-    MatButtonModule
+    MatButtonModule,
+    AngularFireModule.initializeApp(environment.firebase),
+    MatSelectModule,
+    NgxMatFileInputModule,
+    NgxMatColorPickerModule
   ],
   providers: [
+    { provide: MAT_COLOR_FORMATS, useValue: CUSTOM_MAT_COLOR_FORMATS }
   ],
   bootstrap: [AppComponent],
   entryComponents: [ProjectcardDetailsComponent]

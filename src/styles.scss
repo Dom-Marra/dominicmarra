@@ -1,71 +1,6 @@
-@import '~@angular/material/theming';
-@import url('https://fonts.googleapis.com/css2?family=Ropa+Sans&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Francois+One&display=swap');
+@import './app/console/projectform/projectform.component.scss';
 
-@include mat-core();
-
-$white: (
-  50: #FFFFFF,
-  100: #f2f2f2,
-  200: #d9d9d9,
-  300: #bfbfbf,
-  400: #b3b3b3,
-  contrast: (
-      50: #FFFFFF,
-      100:#FFFFFF,
-      200:#FFFFFF,
-      300:#FFFFFF,
-      400:#FFFFFF,
-  )
-);
-
-$black: (
-  50: #000000,
-  100: #1a1a1a,
-  200: #262626,
-  300: #333333,
-  400: #404040,
-  contrast: (
-      50: #abeded,
-      100:#abeded,
-      200:#abeded,
-      300:#abeded,
-      400:#abeded,
-  )
-);
-
-$red: (
-  50: #BF360C,
-  contrast: (
-      50: #BF360C,
-  )
-);
-
-
-$dominicmarra-primary: mat-palette($white);
-$dominicmarra-accent: mat-palette($black);
-$dominicmarra-warn: mat-palette($red);
-
-$dominicmarra-theme: mat-light-theme((
-  color: (
-    primary: $dominicmarra-primary,
-    accent: $dominicmarra-accent,
-    warn: $dominicmarra-warn,
-  )
-));
-
-@include angular-material-theme($dominicmarra-theme);
-
-$dominicmarra-typography: mat-typography-config(
-  $font-family: 'Francois One, monospace',
-  $headline: mat-typography-level(45px, 45px, 500),
-  $title: mat-typography-level(35px, 35px, 500),
-  $subheading-2: mat-typography-level(24px, 24px, 500, 'Ropa Sans'),
-  $body-1: mat-typography-level(18px, 18px, 500, 'Ropa Sans'),
-  $caption: mat-typography-level(16px, 16px, 500, 'Ropa Sans'),
-);
-
-@include angular-material-typography($dominicmarra-typography);
+@include custom-select-theme();
 
 html, body { 
   min-height: 100%;
@@ -75,32 +10,7 @@ body {
   margin: 0; 
 }
 
-@media only screen and (max-width: 790px) { 
+//TODO: Add default style for mat forms
+//TODO: Variables for z-index
+//TODO: Variables for footer and navbar heights
 
-  $dominicmarra-typography: mat-typography-config(
-    $font-family: 'Francois One, monospace',
-    $headline: mat-typography-level(40px, 40px, 500),
-    $title: mat-typography-level(33px, 33px, 500),
-    $subheading-2: mat-typography-level(22px, 22px, 500, 'Ropa Sans'),
-    $body-1: mat-typography-level(16px, 16px, 500, 'Ropa Sans'),
-    $caption: mat-typography-level(14px, 14px, 500, 'Ropa Sans'),
-  );
-
-  @include angular-material-typography($dominicmarra-typography);
-
-}
-
-@media only screen and (max-width: 360px) { 
-
-  $dominicmarra-typography: mat-typography-config(
-    $font-family: 'Francois One, monospace',
-    $headline: mat-typography-level(35px, 35px, 500),
-    $title: mat-typography-level(27px, 27px, 500),
-    $subheading-2: mat-typography-level(20px, 20px, 500, 'Ropa Sans'),
-    $body-1: mat-typography-level(14px, 14px, 500, 'Ropa Sans'),
-    $caption: mat-typography-level(12px, 12px, 500, 'Ropa Sans'),
-  );
-
-  @include angular-material-typography($dominicmarra-typography);
-
-}

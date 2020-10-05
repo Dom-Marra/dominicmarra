@@ -1,4 +1,7 @@
 @import './app/console/projectform/projectform.component.scss';
+@import '~quill/dist/quill.core.css';
+@import '~quill/dist/quill.bubble.css';
+@import '~quill/dist/quill.snow.css';
 
 @include custom-select-theme();
 

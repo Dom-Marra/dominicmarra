@@ -1,26 +1,32 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { AppRoutingModule } from './app-routing.module';
 import { ReactiveFormsModule } from '@angular/forms';
+
+//Angular Material Modules
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field'
 import { MatButtonModule } from '@angular/material/button';
-import {MatSelectModule} from '@angular/material/select';
+import { MatSelectModule } from '@angular/material/select';
 
+//Extra angular material modules
 import { NgxMatFileInputModule } from '@angular-material-components/file-input';
-import { MAT_COLOR_FORMATS, NgxMatColorPickerModule, NGX_MAT_COLOR_FORMATS, MatColorFormats } from '@angular-material-components/color-picker'
+import { MAT_COLOR_FORMATS, NgxMatColorPickerModule, MatColorFormats } from '@angular-material-components/color-picker'
 
-import { AppRoutingModule } from './app-routing.module';
-import { AppComponent } from './app.component';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-
+//Extras
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { MatDialogModule } from "@angular/material/dialog";
 import { SimplebarAngularModule } from 'simplebar-angular';
+import { QuillModule } from 'ngx-quill';
 
+//Firebase Modules
 import { AngularFireModule } from '@angular/fire';
+import { AngularFireStorageModule } from '@angular/fire/storage';
 import { environment } from '../environments/environment';
 
+//App components
+import { AppComponent } from './app.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { HomeComponent } from './home/home.component';
 import { ProjectcardComponent } from './projectcard/projectcard.component';
@@ -72,9 +78,11 @@ export const CUSTOM_MAT_COLOR_FORMATS: MatColorFormats = {
     MatFormFieldModule,
     MatButtonModule,
     AngularFireModule.initializeApp(environment.firebase),
+    AngularFireStorageModule,
     MatSelectModule,
     NgxMatFileInputModule,
-    NgxMatColorPickerModule
+    NgxMatColorPickerModule,
+    QuillModule.forRoot()
   ],
   providers: [
     { provide: MAT_COLOR_FORMATS, useValue: CUSTOM_MAT_COLOR_FORMATS }

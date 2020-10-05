@@ -9,7 +9,7 @@
             </div>
             <mat-form-field class="form-field" appearance="outline">
                 <ngx-mat-file-input formControlName="thumbnail" [multiple]="false" 
-                name="thumbnail" (change)="displayThumbnail($event)" [accept]="'image/*'" required>
+                name="thumbnail" (change)="thumbnailInputChange($event)" [accept]="'image/*'" required>
                 </ngx-mat-file-input>
                 <mat-error *ngIf="projectForm.controls.thumbnail.invalid">{{ getThumbnailErrors() }}</mat-error>
             </mat-form-field>
@@ -24,7 +24,7 @@
             </div>
             <mat-form-field class="form-field" appearance="outline">
                 <ngx-mat-file-input name="images" formControlName="images" 
-                (change)="displayImages($event)" [multiple]="true" [accept]="'image/*'" required>
+                (change)="imagesInputChange($event)" [multiple]="true" [accept]="'image/*'" required>
                 </ngx-mat-file-input>
                 <mat-error *ngIf="projectForm.controls.images.invalid">{{ getImagesErrors() }}</mat-error>
             </mat-form-field>
@@ -57,15 +57,22 @@
             </mat-select>
             <mat-error *ngIf="projectForm.controls.technologies.invalid">Please select at least one technology</mat-error>
         </mat-form-field>
-        <mat-form-field class="form-field mat-adjusted" appearance="outline">
+        <mat-form-field class="form-field" appearance="outline">
             <mat-label>Project Color </mat-label>
             <input matInput [ngxMatColorPicker]="picker" formControlName="color" autocomplete="off">
             <ngx-mat-color-toggle matSuffix [for]="picker"></ngx-mat-color-toggle>
-            <ngx-mat-color-picker #picker [touchUi]="touchUi" [color]="color"></ngx-mat-color-picker>
+            <ngx-mat-color-picker #picker [touchUi]="'false'"></ngx-mat-color-picker>
             <mat-error *ngIf="projectForm.controls.color.invalid">Invalid Color</mat-error>
         </mat-form-field>
+        <div class="form-field">
+            <quill-editor matInput formControlName="description" [modules]="toolbarOptions"></quill-editor>
+            <p class="error" *ngIf="projectForm.controls.description.invalid && projectForm.controls.description.touched">
+                Please input a description
+            </p>
+        </div>
         <div id="button-container">
             <button id="submit-button" mat-button [disabled]="!projectForm.valid">Add</button>
         </div>
+        <p class="error" *ngIf="projectForm.errors?.invalidFields">The Form has errors, please fix them</p>
     </div>
 </form>

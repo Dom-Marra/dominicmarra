@@ -39,11 +39,6 @@
             background-repeat: no-repeat;
         }
 
-        .file-input-error {
-            margin-top: 10px;
-            color: mat-color($dominicmarra-warn, 50);
-        }
-
         #thumbnail-input-container {
             flex: 1 1 300px;
     
@@ -84,6 +79,30 @@
             max-width: 100%;
             padding-left: 10px;
             padding-right: 10px;
+            height: 100%;
+        }
+
+        quill-editor {
+            height: 100%;
+
+            &.ng-invalid.ng-touched {
+
+                .ql-toolbar.ql-snow + .ql-container.ql-snow, .ql-toolbar.ql-snow {
+                    border-color: mat-color($dominicmarra-warn, 50);
+                }
+
+                .ql-editor.ql-blank::before {
+                    color: mat-color($dominicmarra-warn, 50);
+                }
+            }
+        }
+
+        .error {
+            margin-top: 0.4em;
+            padding: 0 1em;
+            color: mat-color($dominicmarra-warn, 50);
+            @include mat-typography-level-to-styles($dominicmarra-typography, title);
+            font-size: 75%;
         }
     }
 
@@ -117,6 +136,7 @@
     
 
     #button-container {
+        padding-top: 15px;
         width: 100%;
         display: flex;
         flex-direction: row;

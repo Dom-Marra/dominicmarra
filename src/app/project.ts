@@ -14,25 +14,43 @@ export enum Technologies {
     Angular
 }
 
+export interface ProjectObject {
+    name: string;
+    caption: string;
+    thumbnail: File | string; 
+    color: String;
+    description: string;
+    images: Array<File> | Array<string>;
+    technologies: Array<Technologies>;
+    projectLink?: String;
+    gitHubLink?: String;
+}
+
 export class Project {
 
-    private readonly faAngular = faAngular;
-    private readonly faJs = faJs;
-    private readonly faHtml5 = faHtml5;
-    private readonly faCss3 = faAngular;
-    private readonly faPhp = faPhp;
-    private readonly faBootstrap = faBootstrap;
-    
+    public projectObj: ProjectObject;
     
     constructor(private name: string, 
                 private caption: string, 
-                private thumbnail: string, 
+                private thumbnail: File | string, 
                 private color: String,
                 private description: string, 
-                private images: Array<string>,
+                private images: Array<any> | Array<string>,
                 private technologies: Array<Technologies>,
-                private projectLink: String,
-                private gitHubLink: String) { 
+                private projectLink?: String,
+                private gitHubLink?: String) { 
+        
+        this.projectObj = { 
+            name: this.name,
+            caption: this.caption,
+            thumbnail: this.thumbnail,
+            color: this.color,
+            description: this.description,
+            images: this.images,
+            technologies: this.technologies,
+            projectLink: this.projectLink,
+            gitHubLink: this.gitHubLink }
+
     }
 
     /**
@@ -58,7 +76,7 @@ export class Project {
      * 
      * @returns URL as String
      */
-    public getThumbnail(): String {
+    public getThumbnail(): File | String {
         return this.thumbnail;
     }
 
@@ -86,7 +104,7 @@ export class Project {
      * 
      * @returns URLs as an Array of Strings
      */
-    public getImages(): Array<String> {
+    public getImages(): Array<File | String> {
         return this.images;
     }
 
@@ -101,11 +119,11 @@ export class Project {
 
         switch(+tech) {
             case Technologies.HTML: {
-                icon = this.faHtml5;
+                icon = faHtml5;
                 break;
             }
             case Technologies.CSS: {
-                icon = this.faCss3;
+                icon = faCss3;
                 break;
             }
             case Technologies.SCSS: {
@@ -117,7 +135,7 @@ export class Project {
                 break;
             }
             case Technologies.JS: {
-                icon = this.faJs;
+                icon = faJs;
                 break;
             }
             case Technologies.TS: {
@@ -129,7 +147,7 @@ export class Project {
                 break;
             }
             case Technologies.Bootstrap: {
-                icon = this.faBootstrap;
+                icon = faBootstrap;
                 break;
             }
             case Technologies.Firebase: {
@@ -137,11 +155,11 @@ export class Project {
                 break;
             }
             case Technologies.pHp: {
-                icon = this.faPhp;
+                icon = faPhp;
                 break;
             }
             case Technologies.Angular: {
-                icon = this.faAngular;
+                icon = faAngular;
                 break;
             }
         }

@@ -2,7 +2,6 @@ import { Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild, 
 import { FormGroup, FormControl, ValidationErrors } from '@angular/forms';
 import { Validators } from '@angular/forms';
 import { Project, Technologies } from '../../project';
-import { FirebaseService } from '../../firebase.service';
 
 @Component({
   selector: 'app-projectform',
@@ -56,7 +55,7 @@ export class ProjectformComponent implements OnInit {
 
   private imageInvalidErrorNames: Array<String> = [];                 //names of files that do not match an image type
 
-  constructor(private firebase: FirebaseService) { }
+  constructor() { }
 
   ngOnInit(): void { }
 
@@ -64,15 +63,15 @@ export class ProjectformComponent implements OnInit {
    * Submits the project form
    */
   public submitForm() {
-    let project = new Project(this.projectForm.controls.name.value, 
-                              this.projectForm.controls.caption.value, 
-                              this.projectForm.controls.thumbnail.value, 
-                              this.projectForm.controls.color.value.hex, 
-                              this.projectForm.controls.description.value, 
-                              this.projectForm.controls.images.value, 
-                              this.projectForm.controls.technologies.value, 
-                              this.projectForm.controls.projectlink.value, 
-                              this.projectForm.controls.githublink.value);
+    let project = new Project({name: this.projectForm.controls.name.value, 
+                              caption: this.projectForm.controls.caption.value, 
+                              thumbnail: this.projectForm.controls.thumbnail.value, 
+                              color: this.projectForm.controls.color.value.hex, 
+                              description: this.projectForm.controls.description.value, 
+                              images: this.projectForm.controls.images.value, 
+                              technologies: this.projectForm.controls.technologies.value, 
+                              projectLink: this.projectForm.controls.projectlink.value, 
+                              gitHubLink: this.projectForm.controls.githublink.value});
     
     this.projectFormEmitted.emit(project);
   }

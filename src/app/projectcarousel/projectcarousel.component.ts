@@ -27,26 +27,26 @@ export class ProjectcarouselComponent implements OnInit {
 
   //Test slides
   public projects = [
-    new Project("Vape It", "Store Catalogue", "URL(TEST)", "#FFD600", "Lorem ipsum dolor sit amet, " +
+    new Project({name: "Vape It", caption: "Store Catalogue", thumbnail: "URL(TEST)", color: "FFD600", description: "Lorem ipsum dolor sit amet, " +
     "consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim " + 
     "veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor " + 
     "in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat " + 
-    "non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.", [], [Technologies.HTML], "", ""),
-    new Project("BL3CALC", "Borderlands 3 Build Planner", "URL(TEST)", "#00A0D2", "Lorem ipsum dolor sit amet, " +
+    "non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.", images: [], technologies: [Technologies.HTML], projectLink: "", gitHubLink: ""}),
+    new Project({name: "BL3CALC", caption: "Borderlands 3 Build Planner", thumbnail:  "URL(TEST)", color: "00A0D2", description: "Lorem ipsum dolor sit amet, " +
     "consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim " + 
     "veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor " + 
-    "in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.", [], [], "", ""),
-    new Project("Dominic Marra", "Portfolio", "URL(TEST)", "#FF00F5", "Lorem ipsum dolor sit amet, " +
+    "in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.", images: [],  technologies: [], projectLink: "", gitHubLink: ""}),
+    new Project({name: "Dominic Marra", caption: "Portfolio", thumbnail: "URL(TEST)", color: "FF00F5", description: "Lorem ipsum dolor sit amet, " +
     "consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim " + 
     "veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor " + 
     "in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat " + 
-    "non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.", [], [], "", ""),
-    new Project("MAC: Mobile Attacks & Countermeasures", "Malicious Attack Information", "URL(TEST)", "#5b5e62", "Lorem ipsum dolor sit amet, " +
+    "non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.", images: [], technologies: [], projectLink: "", gitHubLink: ""}),
+    new Project({name: "MAC: Mobile Attacks & Countermeasures", caption: "Malicious Attack Information", thumbnail: "URL(TEST)", color: "5b5e62", description: "Lorem ipsum dolor sit amet, " +
     "consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim " + 
-    "veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.", [], [], "", ""),
-    new Project("WasteBook", "Food Waste Log", "URL(TEST)", "#8B4513", "Lorem ipsum dolor sit amet, " +
+    "veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.", images: [], technologies: [], projectLink: "", gitHubLink: ""}),
+    new Project({name: "WasteBook", caption: "Food Waste Log", thumbnail: "URL(TEST)", color: "8B4513", description: "Lorem ipsum dolor sit amet, " +
     "consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim " + 
-    "veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.", [], [], "", "")
+    "veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.", images: [], technologies: [], projectLink: "", gitHubLink: ""})
   ]
 
   constructor() { }

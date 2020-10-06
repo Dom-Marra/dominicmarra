@@ -28,30 +28,8 @@ export interface ProjectObject {
 
 export class Project {
 
-    public projectObj: ProjectObject;
     
-    constructor(private name: string, 
-                private caption: string, 
-                private thumbnail: File | string, 
-                private color: String,
-                private description: string, 
-                private images: Array<any> | Array<string>,
-                private technologies: Array<Technologies>,
-                private projectLink?: String,
-                private gitHubLink?: String) { 
-        
-        this.projectObj = { 
-            name: this.name,
-            caption: this.caption,
-            thumbnail: this.thumbnail,
-            color: this.color,
-            description: this.description,
-            images: this.images,
-            technologies: this.technologies,
-            projectLink: this.projectLink,
-            gitHubLink: this.gitHubLink }
-
-    }
+    constructor(public projectObj: ProjectObject) { }
 
     /**
      * Returns the name of the project
@@ -59,7 +37,7 @@ export class Project {
      * @returns String
      */
     public getName(): String {
-        return this.name;
+        return this.projectObj.name;
     }
 
     /**
@@ -68,7 +46,7 @@ export class Project {
      * @returns String
      */
     public getCaption(): String {
-        return this.caption;
+        return this.projectObj.caption;
     }
 
     /**
@@ -77,7 +55,7 @@ export class Project {
      * @returns URL as String
      */
     public getThumbnail(): File | String {
-        return this.thumbnail;
+        return this.projectObj.thumbnail;
     }
 
     /**
@@ -86,7 +64,7 @@ export class Project {
      * @returns URL as String
      */
     public getColor(): String {
-        return this.color;
+        return this.projectObj.color;
     }
 
 
@@ -96,7 +74,7 @@ export class Project {
      * @returns String
      */
     public getDescription(): String {
-        return this.description;
+        return this.projectObj.description;
     }
 
     /**
@@ -105,7 +83,7 @@ export class Project {
      * @returns URLs as an Array of Strings
      */
     public getImages(): Array<File | String> {
-        return this.images;
+        return this.projectObj.images;
     }
 
     /**
@@ -114,51 +92,51 @@ export class Project {
      * @param tech 
      *          enum
      */
-    public getTechnologyIcon(tech: Technologies): any {
+    public getTechnologyIcon(tech: Technologies | String): any {
         let icon: any;
-
-        switch(+tech) {
-            case Technologies.HTML: {
+        
+        switch(tech) {
+            case Technologies.HTML || 'HTML': {
                 icon = faHtml5;
                 break;
             }
-            case Technologies.CSS: {
+            case Technologies.CSS || 'CSS': {
                 icon = faCss3;
                 break;
             }
-            case Technologies.SCSS: {
+            case Technologies.SCSS || 'SCSS': {
 
                 break;
             }
-            case Technologies.Sass: {
+            case Technologies.Sass || 'Sass': {
 
                 break;
             }
-            case Technologies.JS: {
+            case Technologies.JS || 'JS': {
                 icon = faJs;
                 break;
             }
-            case Technologies.TS: {
+            case Technologies.TS || 'TS': {
 
                 break;
             }
-            case Technologies.jQuery: {
+            case Technologies.jQuery || 'jQuery': {
 
                 break;
             }
-            case Technologies.Bootstrap: {
+            case Technologies.Bootstrap || 'Bootstrap': {
                 icon = faBootstrap;
                 break;
             }
-            case Technologies.Firebase: {
+            case Technologies.Firebase || 'Firebase': {
 
                 break;
             }
-            case Technologies.pHp: {
+            case Technologies.pHp || 'pHp': {
                 icon = faPhp;
                 break;
             }
-            case Technologies.Angular: {
+            case Technologies.Angular || 'Angular': {
                 icon = faAngular;
                 break;
             }
@@ -176,8 +154,8 @@ export class Project {
 
         var icons = [];
 
-        if (this.technologies.length > 0) {
-            this.technologies.forEach(tech => {
+        if (this.projectObj.technologies.length > 0) {
+            this.projectObj.technologies.forEach(tech => {
                 icons.push(this.getTechnologyIcon(tech));
             })
         }
@@ -191,7 +169,7 @@ export class Project {
      * @returns String
      */
     public getProjectLink(): String {
-        return this.projectLink;
+        return this.projectObj.projectLink;
     }
 
     /**
@@ -200,7 +178,7 @@ export class Project {
      * @returns String
      */
     public getGithubLink(): String {
-        return this.gitHubLink;
+        return this.projectObj.gitHubLink;
     }
     
 }

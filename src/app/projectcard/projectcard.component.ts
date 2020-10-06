@@ -51,8 +51,6 @@ export class ProjectcardComponent implements OnInit {
    */
   public brightenColor(color: String) {
 
-    color = color.slice(1);                               //remove the # symbol
-
     let red = parseInt(color.substr(0, 2), 16) / 255;     //the red value
     let green = parseInt(color.substr(2, 2), 16) / 255;   //the greeb value
     let blue = parseInt(color.substr(4, 2), 16) / 255;    //the blue value

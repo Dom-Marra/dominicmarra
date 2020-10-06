@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
 import { ProjectObject } from './project';
-import { AngularFirestore, AngularFirestoreDocument, AngularFirestoreCollection, DocumentData } from '@angular/fire/firestore';
+import { AngularFirestore, AngularFirestoreCollection, DocumentData } from '@angular/fire/firestore';
 import { AngularFireStorage } from '@angular/fire/storage';
-import { finalize } from 'rxjs/operators';
+import { finalize, map } from 'rxjs/operators';
 import { v4 as uuidv4 } from 'uuid';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -27,28 +28,30 @@ export class FirebaseService {
    * Adds a project to the firestore
    * 
    * @param project 
+   * 
+   * @returns
+   *        Promise<any> resolves doc reference, catches errors
    */
   public addProject(project: ProjectObject): Promise<any> {
-    let projectToAdd: ProjectObject = project;
+    let projectToAdd: ProjectObject = project;                  //data of project to add
 
     
-    let addProjectPromise = new Promise((resolve, reject) => {
+    let addProjectPromise = new Promise((resolve, reject) => {  //addition promise
 
-      this.uploadImage(<File> project.thumbnail).then((url: string) => {
-        projectToAdd.thumbnail = url;
+      this.uploadImage(<File> project.thumbnail).then((url: string) => {  //upload project thumbnail
+        projectToAdd.thumbnail = url;                                     //set project data thumbnail to upload URL
 
-        this.uploadImages(project.images as Array<File>).then((urls: Array<string>) => {
-          projectToAdd.images = urls;
+        this.uploadImages(project.images as Array<File>).then((urls: Array<string>) => {  //upload project images
+          projectToAdd.images = urls;                                                     //set project data images to upload urls
 
-          this.projectsCollection.add(projectToAdd).then(reference => {
-            resolve(reference);
+          this.projectsCollection.add(projectToAdd).then(reference => {                   //add project to firestor
+            resolve(reference);                                                           //resolve reference
           }).catch(err => {
-            reject(err);
+            reject(err);                                                                  //catch errors
           });
 
-        });
-      });
-      
+        }).catch(images => reject("Error: could not upload: " + images));
+      }).catch(image => reject("Error: could not upload: " + image.name));
     });
 
     return addProjectPromise;
@@ -59,6 +62,9 @@ export class FirebaseService {
    * 
    * @param image
    *        File: image to upload 
+   * 
+   * @returns 
+   *        Promise<any> resolves download url, rejects image file
    */
   public uploadImage(image: File): Promise<any> {
 
@@ -68,9 +74,9 @@ export class FirebaseService {
         const filePath = 'images/' + id;                                  //file path
         const fileRef = this.storage.ref(filePath);                       //reference to the file
 
-        let upload = fileRef.put(image);                                //upload task
+        let upload = fileRef.put(image);                                  //upload task
 
-        upload.snapshotChanges().pipe(                                  //resolve url when the task is finalized
+        upload.snapshotChanges().pipe(                                    //resolve url when the task is finalized
           finalize(() => {
 
             fileRef.getDownloadURL().subscribe(url => resolve(url));
@@ -158,6 +164,28 @@ export class FirebaseService {
   }
 
   /**
+   * Reads all the documents in the projects collection
+   * 
+   * @returns
+   *        Observable<Array<DocumentData>>
+   */
+  public readAllDocuments(): Observable<Array<DocumentData>> {
+
+    let readObs = this.projectsCollection.snapshotChanges().pipe(map(actions => { //read observable
+      let projects: Array<DocumentData> = [];                                     //array of project docs
+
+      for (let action of actions) {
+        projects.push(action.payload.doc);                                        //push each doc of snaphsot change to projects
+      }
+
+      return projects;                                                            //return projects
+
+    }));
+
+    return readObs; 
+  }
+
+  /**
    * Reads image by its name
    * 
    * @param imageName 
@@ -185,21 +213,125 @@ export class FirebaseService {
 
   //***********************************************************************//
   //                                                                       //
+  //                        Delete FUNCTIONS                               //
+  //                                                                       //
+  //***********************************************************************//
+
+  /**
+   * Deletes a document
+   * 
+   * @param docId
+   *        String: the documents ID
+   * 
+   * @returns
+   *        Promise<any> resolves nothing, rejects errors during deletion 
+   */
+  public deleteProject(docId: string): Promise<any> {
+    let docRef = this.projectsCollection.doc(docId).ref;          //document ref
+
+    let deletePromise = new Promise<any>((resolve, reject) => {   //deletion promise
+      docRef.get().then(doc => {                                  //get doc
+        this.deleteImage(doc.data().thumbnail).then(() => {       //delete thumbnail
+          this.deleteImages(doc.data().images).then(() => {       //delete images
+            docRef.delete().then(() => {                          //delete doc
+              resolve();
+            }).catch(() => {                                        //Catch errors
+              reject('Error: could not delete the projects data');
+            })
+          }).catch(imageName => {
+            reject("Error: while deleting file: " + imageName)
+          })
+        }).catch(imageNames => {
+          reject("Error: while deleting files: " + imageNames)
+        })
+      })
+    });
+
+    return deletePromise;
+    
+  }
+
+  /**
+   * Deletes an image
+   * 
+   * @param url
+   *        string: image url 
+   * 
+   * @returns
+   *        Promise<any>: resolves if delete was a success, rejects image name if failed
+   */
+  public deleteImage(url: string): Promise<any> {
+
+    let imageRef = this.storage.storage.refFromURL(url);            //image reference
+
+    let deletePromise = new Promise<any>((resolve, reject) => {     //deletion promise
+      imageRef.delete().then(() => {                                //delete the image
+        resolve();                                                  //resolve if deletion was a success
+      }).catch(() => {
+        reject(imageRef.name);                                      //reject the name of the image if deletion failed
+      })
+    });
+
+    return deletePromise;
+  }
+
+  /**
+   * Deletes a subset of images
+   * 
+   * @param urls 
+   *        Array<string>: urls of the images
+   * 
+   * @returns
+   *        Promise<any>: resolves if the deletions went through, rejects array of image names if failed
+   */
+  public deleteImages(urls: Array<string>): Promise<any> {
+
+    let deletePromises: Array<Promise<any>> = [];                 //array of deletion promises
+
+    for (let url of urls) {
+      deletePromises.push(this.deleteImage(url));                 //push each image deletion
+    }
+
+    let deletePromise = new Promise((resolve, reject) => {        //Overall deletion promise
+      Promise.all(deletePromises.map(p => p.catch(Error))).then(res => {   
+        
+        let errors = res.filter(errs => errs instanceof Error);     //filter caught errors
+
+        if (errors.length > 0) {                                    //any errors? reject the names of the images that caused them
+          reject(errors);
+        } else {                                                    //no errors? resolve
+          resolve();
+        }
+      });
+    })
+    
+
+    return deletePromise;
+  }
+
+  //***********************************************************************//
+  //                                                                       //
   //                        Misc FUNCTIONS                                 //
   //                                                                       //
   //***********************************************************************//
 
+  /**
+   * Generates a UUID for images that are uploaded to the firestore storage
+   * 
+   * @returns
+   *         Promise<string> resolves the UUID for the image
+   */
   public generateUUIDForImage(): Promise<string> {
 
-    let id = uuidv4();
+    let id = uuidv4();                                    //generate the UUID
 
     let generatePromise = new Promise<string>(resolve => {
 
-      this.readImage(id).then(url => {
-        if (url != null) {
+      this.readImage(id).then(url => {                    //check if image with UUID already exists
+        if (url != null) {                                //does re-run function
           this.generateUUIDForImage();
         }
-      }).catch(() => {
+      }).catch(() => {                                    //doesn't resolve it
         resolve(id);
       })
     });

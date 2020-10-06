@@ -1,0 +1,26 @@
+@import '../../../styles.scss';
+
+#project-select-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    margin: auto;
+    width: 95%;
+
+    #project-select {
+        justify-self: start;
+        flex: 0 0 400px;
+        margin: 0 5px 0 5px;
+        max-width: 100%;
+
+        button {
+            display: block;
+            color: mat-color($dominicmarra-primary, 50);
+            background-color: mat-color($dominicmarra-accent, 50);
+            border-radius: 0;
+            width: 60%;
+            margin: auto;
+            margin-top: 15px;
+        }
+    }
+}

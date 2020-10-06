@@ -1,0 +1,6 @@
+<div id="project-select-container">  
+    <div id="project-select" *ngFor="let proj of projects">
+        <app-projectcard [project]="proj.project"></app-projectcard>
+        <button mat-button (click)="emmitProjId(proj.docId)">Select</button>
+    </div>
+</div>

@@ -39,7 +39,9 @@
         .projectcard-image {
             width: 300px;
             height: 300px;
-            background-color: white;
+            background-size: contain;
+            background-position: center;
+            background-repeat: no-repeat;
         }
     
         .projectcard-expand {
@@ -58,7 +60,6 @@
             .projectcard-image {
                 width: 200px;
                 height: 200px;
-                background-color: white;
             }
         }
     }

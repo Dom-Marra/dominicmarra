@@ -41,6 +41,8 @@ import { AddprojectComponent } from './console/addproject/addproject.component';
 import { UpdateprojectComponent } from './console/updateproject/updateproject.component';
 import { DeleteprojectComponent } from './console/deleteproject/deleteproject.component';
 import { ProjectformComponent } from './console/projectform/projectform.component';
+import { ProjectselectComponent } from './console/projectselect/projectselect.component';
+import { ConfirmdiagComponent } from './console/confirmdiag/confirmdiag.component';
 
 export const CUSTOM_MAT_COLOR_FORMATS: MatColorFormats = {
   display: {
@@ -64,7 +66,9 @@ export const CUSTOM_MAT_COLOR_FORMATS: MatColorFormats = {
     AddprojectComponent,
     UpdateprojectComponent,
     DeleteprojectComponent,
-    ProjectformComponent
+    ProjectformComponent,
+    ProjectselectComponent,
+    ConfirmdiagComponent
   ],
   imports: [
     BrowserModule,
@@ -88,6 +92,6 @@ export const CUSTOM_MAT_COLOR_FORMATS: MatColorFormats = {
     { provide: MAT_COLOR_FORMATS, useValue: CUSTOM_MAT_COLOR_FORMATS }
   ],
   bootstrap: [AppComponent],
-  entryComponents: [ProjectcardDetailsComponent]
+  entryComponents: [ProjectcardDetailsComponent, ConfirmdiagComponent]
 })
 export class AppModule { }

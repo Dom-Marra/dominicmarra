@@ -14,9 +14,14 @@ export class AddprojectComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  /**
+   * Adds project to the firestore
+   * 
+   * @param formValues
+   *        Project: values passed from project form 
+   */
   public add(formValues: Project) {
     this.firebase.addProject(formValues.projectObj).then(res => {
-      console.log(res);
     });
   }
 

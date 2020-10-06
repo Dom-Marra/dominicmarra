@@ -5,9 +5,8 @@
         <ngx-simplebar id="simpBar">
             <div class="projectcard-details">
                 <div class="projectcard-images"></div>
-                <p class="projectcard-details">
-                    {{this.project.getDescription()}}
-                </p>
+                <div class="projectcard-details" [innerHTML]="this.project.getDescription()">
+                </div>
                 <div class="project-technologies">
                     <fa-icon *ngFor="let techIcon of projectIcons" [icon]="techIcon" class="projectcard-icon"></fa-icon>
                 </div>

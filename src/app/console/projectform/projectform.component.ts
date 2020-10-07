@@ -1,3 +1,4 @@
+import { ColorAdapter, Color } from '@angular-material-components/color-picker';
 import { Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild, ViewEncapsulation } from '@angular/core';
 import { FormGroup, FormControl, ValidationErrors } from '@angular/forms';
 import { Validators } from '@angular/forms';
@@ -14,12 +15,33 @@ export class ProjectformComponent implements OnInit {
 
   @Output() projectFormEmitted = new EventEmitter<Project>();   //Event emmiter to push the project on form submit
 
-  @Input() project: Project;                                    //project to use during modification
+  @Input() set project(_project: Project) {                     //project to use during modification
 
-  @ViewChild('thumbnail') thumbnailImageBox: ElementRef<HTMLElement>;   //thumbnail preview div
+    let hexToRgb = new ColorAdapter().parse(_project.getColor().toString());        //Converts project hex to rgba
 
-  public images: Array<string | ArrayBuffer> = [];
-  public techs = Technologies;
+    //Set form values
+    this.projectForm.controls.name.setValue(_project.getName()); 
+    this.projectForm.controls.caption.setValue(_project.getCaption()); 
+    this.projectForm.controls.description.setValue(_project.getDescription()); 
+    this.projectForm.controls.technologies.setValue(_project.projectObj.technologies); 
+    this.projectForm.controls.color.setValue(new Color(hexToRgb.r, hexToRgb.g, hexToRgb.b));
+    this.projectForm.controls.projectlink.setValue(_project.getProjectLink()); 
+    this.projectForm.controls.githublink.setValue(_project.getGithubLink()); 
+
+    //set images and clear validators
+    this.images = _project.getImages() as Array<string>;
+    this.projectForm.controls.images.clearValidators();
+
+    this.thumbnail = _project.getThumbnail().toString();
+    this.projectForm.controls.thumbnail.clearValidators();
+
+    this.projectToUpdate = _project;                      //set project to update data
+  }                      
+
+  public projectToUpdate: Project;                        //The project data that will be updated
+  public images: Array<string | ArrayBuffer> = [];        //project images
+  public thumbnail: ArrayBuffer | string;                 //thumbnail image
+  public techs = Technologies;                            //technologies used for technology select input
 
   public toolbarOptions = {                               //Quill editor toolbar options
 
@@ -41,7 +63,7 @@ export class ProjectformComponent implements OnInit {
   };
   
 
-  public projectForm = new FormGroup({
+  public projectForm = new FormGroup({                                //form values
     thumbnail: new FormControl('', Validators.required),
     images: new FormControl('', Validators.required),
     name: new FormControl('', Validators.required),
@@ -92,7 +114,7 @@ export class ProjectformComponent implements OnInit {
       this.displayThumbnail(file);
     }).catch(err => {                                                         //Validation failed                                           
       event.target.value = null;                                              //clear file input
-      this.thumbnailImageBox.nativeElement.style.backgroundImage = '';        //clear thumbnail element background image
+      this.thumbnail = '';                                                    //clear thumbnail image
       this.projectForm.controls.thumbnail.setValue(null);                     //clear thumbnail value
       this.projectForm.get('thumbnail').setErrors(err);                       //set thumbnail error
     })
@@ -134,7 +156,7 @@ export class ProjectformComponent implements OnInit {
     filereader.readAsDataURL(image);                                        //read the image
   
     filereader.onload = () => {                                             //Set the thumbnail preview div background
-      this.thumbnailImageBox.nativeElement.style.backgroundImage = 'url(' + filereader.result + ')';
+      this.thumbnail = filereader.result;
     }
   }
 

@@ -49,7 +49,6 @@ export class NavbarComponent implements OnInit {
 
     this.setNavBarBaseHeight();
     this.setNavBarState();
-    console.log(this.navBarBaseHeight);
   }
 
 

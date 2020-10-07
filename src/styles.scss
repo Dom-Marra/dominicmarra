@@ -1,9 +1,7 @@
-@import './app/console/projectform/projectform.component.scss';
+@import './customTheme.scss';
 @import '~quill/dist/quill.core.css';
 @import '~quill/dist/quill.bubble.css';
 @import '~quill/dist/quill.snow.css';
-
-@include custom-select-theme();
 
 html, body { 
   min-height: 100%;
@@ -13,7 +11,79 @@ body {
   margin: 0; 
 }
 
-//TODO: Add default style for mat forms
-//TODO: Variables for z-index
+.cdk-global-scrollblock {
+  position: static;
+}
+
+.simplebar-vertical  {
+  width: 7px !important; 
+}
+
+
+.simplebar-hover .simplebar-scrollbar:before, 
+.simplebar-mouse-entered .simplebar-scrollbar:before, 
+.simplebar-scrollbar.simplebar-visible:before, 
+.simplebar-scrolling .simplebar-scrollbar:before {
+    opacity: 1;
+}
+
+$z-indices: ("nav-2": 500, "nav-1": 400, "content-3": 300, "content-2": 200, "content-1": 100);
+
+@mixin custom-material-form {
+  .mat-form-field .mat-input-element {
+      caret-color: mat-color($dominicmarra-accent, 50);
+  }
+  
+  .mat-form-field-invalid .mat-input-element {
+      caret-color: mat-color($dominicmarra-warn, 50);
+  }
+  
+  .mat-form-field-outline, .mat-form-field-outline-thick, .mat-form-field-label {
+      color: mat-color($dominicmarra-accent, 50);
+  }
+  
+  .mat-form-field-outline-start, .mat-form-field-outline-end {
+      border-radius: 0;
+  }
+  
+  .mat-form-field-invalid.mat-form-field-invalid {
+  
+      .mat-form-field-outline-thick, .mat-form-field-label {
+          color: mat-color($dominicmarra-warn, 50);
+      }
+  }
+  
+  .mat-error {
+      color: mat-color($dominicmarra-warn, 50);
+  }
+
+  .mat-pseudo-checkbox {
+
+    &::after {
+        color: black !important;
+    }
+  }
+}
+
+@mixin custom-base-button {
+  .mat-button-base {
+    color: mat-color($dominicmarra-primary, 50);
+    background-color: mat-color($dominicmarra-accent, 50);
+    border-radius: 0;
+
+    &:hover {
+        color: mat-color($dominicmarra-accent, '50-contrast');
+    }
+
+    &.mat-button-disabled {
+        background-color: mat-color($dominicmarra-accent, 400);
+
+        &:hover {
+            color: mat-color($dominicmarra-primary, 50);
+        }
+    }
+  }
+}
+
 //TODO: Variables for footer and navbar heights
 

@@ -1,6 +1,6 @@
 import { ColorAdapter, Color } from '@angular-material-components/color-picker';
 import { Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild, ViewEncapsulation } from '@angular/core';
-import { FormGroup, FormControl, ValidationErrors } from '@angular/forms';
+import { FormGroup, FormControl, ValidationErrors, NgForm } from '@angular/forms';
 import { Validators } from '@angular/forms';
 import { Project, Technologies } from '../../project';
 
@@ -12,6 +12,23 @@ import { Project, Technologies } from '../../project';
 })
 
 export class ProjectformComponent implements OnInit {
+
+  @ViewChild('formDirective') private formDirective: NgForm;  //used for resetting the form without erros
+
+  @Input() set submitStatus(status: String | boolean) {       //input from parent when its operation is complete
+    
+    if (status == true) {                                     //operation was a success      
+      this.projectForm.enable();                              //re-anble the form
+      this.formDirective.resetForm();                         //reset directive
+      this.projectForm.reset('');                             //reset form
+      this.images = [];                                       //reset images
+      this.thumbnail = "";                                    //reset thumbail
+
+    } else if (status instanceof String) {                    //there was an error
+      this.projectForm.enable();                              //re-enable form
+      console.log(status);                                    //log error
+    }
+  }
 
   @Output() projectFormEmitted = new EventEmitter<Project>();   //Event emmiter to push the project on form submit
 
@@ -85,7 +102,7 @@ export class ProjectformComponent implements OnInit {
    * Submits the project form
    */
   public submitForm() {
-    let project = new Project({name: this.projectForm.controls.name.value, 
+    let project = new Project({name: this.projectForm.controls.name.value,                    //create project
                               caption: this.projectForm.controls.caption.value, 
                               thumbnail: this.projectForm.controls.thumbnail.value, 
                               color: this.projectForm.controls.color.value.hex, 
@@ -95,7 +112,8 @@ export class ProjectformComponent implements OnInit {
                               projectLink: this.projectForm.controls.projectlink.value, 
                               gitHubLink: this.projectForm.controls.githublink.value});
     
-    this.projectFormEmitted.emit(project);
+    this.projectFormEmitted.emit(project);                                                    //emmit project
+    this.projectForm.disable();                                                               //disable form
   }
 
 

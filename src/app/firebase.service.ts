@@ -248,7 +248,7 @@ export class FirebaseService {
           if (Array.isArray(projectNew.images) 
           && (projectNew.images as Array<any>).every(item => item instanceof File)) {      //check if new images were files
             uploadedImages.push(images);                                                   //push new image urls to uploaded images
-            imagesToRemove.push(projectOld.images);                                        //push old image urls to imagesToRemove
+            imagesToRemove = projectOld.images;                                            //push old image urls to imagesToRemove
           }
 
           projectNew.images = images;                                          //set the new projects images to the resolved ones

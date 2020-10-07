@@ -10,7 +10,7 @@
     height: 90px;
     width: 100%;
     box-shadow: 0px 4px 5px 0px rgba(0, 0, 0, 0.33);
-    z-index: 1000;
+    z-index: map-get($z-indices, "nav-2");
 
     #navbar-name {
         color: mat-color($dominicmarra-primary, 50);

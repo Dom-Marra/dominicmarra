@@ -1,9 +1,11 @@
 @import '../../styles.scss';
 
 #footer {
+    position: relative;
     width: 100%;
     height: 200px;
     background-color: mat-color($dominicmarra-accent, 100);
+    z-index: map-get($z-indices, "nav-2");
 
     #footer-name {
         color: mat-color($dominicmarra-primary, 50);

@@ -5,11 +5,11 @@
         <div id="thumbnail-input-container" class="image-input-container">
             <label for="thumbnail">Upload Thumbnail</label>
             <div id="thumbnail-image" class="image-display">
-                <div #thumbnail class="image-preview"></div>
+                <div class="image-preview" [ngStyle]="{'background-image': 'url(' + thumbnail + ')'}"></div>
             </div>
             <mat-form-field class="form-field" appearance="outline">
                 <ngx-mat-file-input formControlName="thumbnail" [multiple]="false" 
-                name="thumbnail" (change)="thumbnailInputChange($event)" [accept]="'image/*'" required>
+                name="thumbnail" (change)="thumbnailInputChange($event)" [accept]="'image/*'" >
                 </ngx-mat-file-input>
                 <mat-error *ngIf="projectForm.controls.thumbnail.invalid">{{ getThumbnailErrors() }}</mat-error>
             </mat-form-field>
@@ -19,12 +19,12 @@
             <label for="images">Upload Image(s)</label>
             <div id="images" class="image-display">
                 <ngx-simplebar id="images-simplebar">
-                    <div #images class="image-preview" *ngFor="let image of images" [ngStyle]="{'background-image': 'url(' + image + ')'}"></div>
+                    <div class="image-preview" *ngFor="let image of images" [ngStyle]="{'background-image': 'url(' + image + ')'}"></div>
                 </ngx-simplebar>
             </div>
             <mat-form-field class="form-field" appearance="outline">
                 <ngx-mat-file-input name="images" formControlName="images" 
-                (change)="imagesInputChange($event)" [multiple]="true" [accept]="'image/*'" required>
+                (change)="imagesInputChange($event)" [multiple]="true" [accept]="'image/*'" >
                 </ngx-mat-file-input>
                 <mat-error *ngIf="projectForm.controls.images.invalid">{{ getImagesErrors() }}</mat-error>
             </mat-form-field>
@@ -71,7 +71,7 @@
             </p>
         </div>
         <div id="button-container">
-            <button id="submit-button" mat-button [disabled]="!projectForm.valid">Add</button>
+            <button id="submit-button" mat-button [disabled]="!projectForm.valid">Submit</button>
         </div>
         <p class="error" *ngIf="projectForm.errors?.invalidFields">The Form has errors, please fix them</p>
     </div>

@@ -9,6 +9,8 @@ import { FirebaseService } from '../../firebase.service';
 })
 export class AddprojectComponent implements OnInit {
 
+  public submitStatus: string | boolean = false;
+
   constructor(private firebase: FirebaseService) { }
 
   ngOnInit(): void {
@@ -21,8 +23,12 @@ export class AddprojectComponent implements OnInit {
    *        Project: values passed from project form 
    */
   public add(formValues: Project) {
-    this.firebase.addProject(formValues.projectObj).then(res => {
-    });
+    this.submitStatus = false;
+    this.firebase.addProject(formValues.projectObj).then(() => {
+      this.submitStatus = true;
+    }).catch(err => {
+      this.submitStatus = err;
+    })
   }
 
 }

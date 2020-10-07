@@ -4,5 +4,5 @@
 </div>
 <div *ngIf="project != null">
     <h2>Modify Project</h2>
-    <app-projectform [project]="project" (projectFormEmitted)="update($event)"></app-projectform>
+    <app-projectform [project]="project" (projectFormEmitted)="update($event)" [submitStatus]="submitStatus"></app-projectform>
 </div>

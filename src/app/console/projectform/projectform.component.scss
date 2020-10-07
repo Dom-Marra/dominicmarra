@@ -1,6 +1,7 @@
-@import '../../../customTheme.scss';
+@import '../../../styles.scss';
 
 #project-form { 
+    @include custom-material-form();
     margin-top: 50px;
 
     #image-inputs-container {
@@ -106,36 +107,8 @@
         }
     }
 
-    .mat-form-field .mat-input-element {
-        caret-color: mat-color($dominicmarra-accent, 50);
-    }
-    
-    .mat-form-field-invalid .mat-input-element {
-        caret-color: mat-color($dominicmarra-warn, 50);
-    }
-    
-    .mat-form-field-outline, .mat-form-field-outline-thick, .mat-form-field-label {
-        color: mat-color($dominicmarra-accent, 50);
-    }
-    
-    .mat-form-field-outline-start, .mat-form-field-outline-end {
-        border-radius: 0;
-    }
-    
-    .mat-form-field-invalid.mat-form-field-invalid {
-    
-        .mat-form-field-outline-thick, .mat-form-field-label {
-            color: mat-color($dominicmarra-warn, 50);
-        }
-    }
-    
-    .mat-error {
-        color: mat-color($dominicmarra-warn, 50);
-    }
-
-    
-
     #button-container {
+        @include custom-base-button();
         padding-top: 15px;
         width: 100%;
         display: flex;
@@ -143,33 +116,6 @@
     
         #submit-button {
             margin-left: auto;
-            color: mat-color($dominicmarra-primary, 50);
-            background-color: mat-color($dominicmarra-accent, 50);
-            border-radius: 0;
-    
-            &:hover {
-                color: mat-color($dominicmarra-accent, '50-contrast');
-            }
-    
-            &.mat-button-disabled {
-                background-color: mat-color($dominicmarra-accent, 400);
-    
-                &:hover {
-                    color: mat-color($dominicmarra-primary, 50);
-                }
-            }
-        }
-    }
-}
-
-@mixin custom-select-theme() {
-    .custom-select {
-
-        .mat-pseudo-checkbox {
-
-            &::after {
-                color: black !important;
-            }
         }
     }
 }

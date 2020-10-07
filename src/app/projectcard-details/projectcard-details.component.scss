@@ -1,36 +1,20 @@
 @import '../../styles.scss';
+@include custom-base-button();
 
 .projectcard-details-header {
     text-align: center;
 }
-
-.cdk-global-scrollblock {
-    position: static;
-  }
   
 .project-details-panel {
     width: 50vw;
 
-.mat-dialog-container, .mat-dialog-content {
-    width: 100%;
-    border-radius: 0;
-    overflow: hidden;
+    .mat-dialog-container, .mat-dialog-content {
+        width: 100%;
+        border-radius: 0;
+        overflow: hidden;
+    }
 }
   
-.simplebar-vertical  {
-    width: 7px !important; 
-}
-
-.simplebar-hover .simplebar-scrollbar:before, 
-.simplebar-mouse-entered .simplebar-scrollbar:before, 
-.simplebar-scrollbar.simplebar-visible:before, 
-.simplebar-scrolling .simplebar-scrollbar:before {
-    opacity: 1;
-}
-  
-  }
-  
-
 #simpBar {
     height: 100%;
 }
@@ -92,9 +76,6 @@
 }
 
 .close-button {
-    color: mat-color($dominicmarra-primary, 50);
-    background-color: mat-color($dominicmarra-accent, 50);
-    border-radius: 0;
     margin-left: auto;
 }
 

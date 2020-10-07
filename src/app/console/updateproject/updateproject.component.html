@@ -1,1 +1,8 @@
-<p>updateproject works!</p>
+<div *ngIf="project == null">
+    <h2>Select A Project</h2>
+    <app-projectselect (projectIdEmmitted)="selectProject($event)"></app-projectselect>
+</div>
+<div *ngIf="project != null">
+    <h2>Modify Project</h2>
+    <app-projectform [project]="project" (projectFormEmitted)="update($event)"></app-projectform>
+</div>

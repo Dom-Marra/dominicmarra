@@ -1,3 +1,5 @@
+@import "../../styles.scss";
+
 .projectcard-container {
     position: relative;
     width: 100%;
@@ -8,8 +10,7 @@
 
     &:hover {
         cursor: pointer;
-        position: relative;
-        z-index: 100;
+        z-index: map-get($z-indices, "content-3");
         box-shadow: 0 0 10px rgba($color: #000000, $alpha: 0.5);
         transition: all 0.25s;
     }

@@ -1,4 +1,4 @@
-<form [formGroup]="projectForm" id="project-form" (ngSubmit)="submitForm()">
+<form [formGroup]="projectForm" #formDirective="ngForm" id="project-form" (ngSubmit)="submitForm()">
 
     <div id="image-inputs-container">
         

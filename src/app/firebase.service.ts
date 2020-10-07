@@ -44,7 +44,7 @@ export class FirebaseService {
         this.uploadImages(project.images as Array<File>).then((urls: Array<string>) => {  //upload project images
           projectToAdd.images = urls;                                                     //set project data images to upload urls
 
-          this.projectsCollection.add(projectToAdd).then(reference => {                   //add project to firestor
+          this.projectsCollection.add(projectToAdd).then(reference => {                   //add project to firestore
             resolve(reference);                                                           //resolve reference
           }).catch(err => {
             reject(err);                                                                  //catch errors
@@ -208,6 +208,122 @@ export class FirebaseService {
     });
 
     return readImagePromise;
+  }
+
+  //***********************************************************************//
+  //                                                                       //
+  //                        Update FUNCTIONS                               //
+  //                                                                       //
+  //***********************************************************************//
+
+  /**
+   * Updates a project document in the firestore
+   * 
+   * @param id 
+   *        String: id of the project
+   * @param projectNew 
+   *        ProjectObj: new project data
+   * @param projectOld 
+   *        ProjObj: old project data
+   * 
+   * @returns
+   *        Promise<any>: Resolves updated doc, rejects with an error
+   */
+  public updateDoc(id: string, projectNew: ProjectObject, projectOld: ProjectObject): Promise<any> {
+    let uploadedImages = [];                                              //array containing urls of uploaded images
+    let imagesToRemove = [];                                              //array containing urls of images to remove
+    
+    let updatePromise = new Promise((resolve, reject) => {                //update promise
+      this.updateThumbnail(projectNew, projectOld).then(thumbnail => {    //update thumbnail
+
+        if (projectNew.thumbnail instanceof File) {                       //check if the new thumbnail is a file
+          uploadedImages.push(thumbnail);                                 //push new thumbnail url to uploaded images
+          imagesToRemove.push(projectOld.thumbnail);                      //push old thumbnail url to imagesToRemove
+        }
+
+        projectNew.thumbnail = thumbnail;                                 //set the new projects thumbnail to the one resolved 
+
+        this.updateImages(projectNew, projectOld).then(images => {        //update project images
+
+          if (Array.isArray(projectNew.images) 
+          && (projectNew.images as Array<any>).every(item => item instanceof File)) {      //check if new images were files
+            uploadedImages.push(images);                                                   //push new image urls to uploaded images
+            imagesToRemove.push(projectOld.images);                                        //push old image urls to imagesToRemove
+          }
+
+          projectNew.images = images;                                          //set the new projects images to the resolved ones
+
+          this.projectsCollection.doc(id).update(projectNew).then(doc => {     //Update the document
+            this.deleteImages(imagesToRemove).then(() => {                     //remove old images
+              resolve(doc);
+            }).catch(() => {
+              reject("Error: Could not delete old images");                    //catch all errors
+            })
+          }).catch(() => "Error: could not update the project data");
+        }).catch(imageNames => {  
+          reject("Error: could not upload : " + imageNames);
+        })
+      }).catch(imageName => {
+        reject("Error: Could not upload : " + imageName);
+      })
+    });
+
+    return updatePromise;
+    
+  }
+
+  /**
+   * Uploads a new thumbnail if one is provided, otherwise resolves url of old one
+   * 
+   * @param projectNew 
+   *        ProjectObj: new project data
+   * @param projectOld 
+   *        ProjectObj: old project data
+   * @returns
+   *        Promise<any>: Resolves url of thumbnail, rejects image name
+   */
+  public updateThumbnail(projectNew: ProjectObject, projectOld: ProjectObject): Promise<any> {
+    let updatePromise = new Promise((resolve, reject) => {
+      if (!(projectNew.thumbnail instanceof File)) { 
+        resolve(projectOld.thumbnail)                                 //resolve old thumbnail if a new file was not provided
+      } else {
+        this.uploadImage(<File> projectNew.thumbnail).then(url => {   //upload new thumbnail
+          resolve(url);
+        }).catch(image => {
+          reject(image.name);
+        });
+      }
+    });
+
+    return updatePromise;
+  }
+
+  /**
+   * Uploads new images for the project, if none are provided this resolves the old images
+   * 
+   * @param projectNew 
+   *        ProjectObj: new project data
+   * @param projectOld 
+   *        ProjectObj: old project data
+   * @returns
+   *        Promise<any>: Resolves urls of images, rejects image names
+   */
+  public updateImages(projectNew: ProjectObject, projectOld: ProjectObject): Promise<any> { 
+
+    let updatePromise = new Promise((resolve, reject) => {
+      if (!Array.isArray(projectNew.images)                                         
+      || !(projectNew.images as Array<any>).every(item => item instanceof File)) { 
+        resolve(projectOld.images)                                                 //Resolve old images if no new images were provided
+      } else {  
+        this.uploadImages(projectNew.images as Array<File>).then(urls => {          //upload new images
+          resolve(urls);
+        }).catch(imageNames => {
+          reject(imageNames);
+        })
+      }
+    });
+
+    return updatePromise;
   }
 
 

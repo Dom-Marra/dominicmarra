@@ -12,7 +12,8 @@ import { Project } from 'src/app/project';
 export class UpdateprojectComponent implements OnInit {
 
   public project: Project;                            //Selected project to modify
-  private projectId: string;
+  private projectId: string;                          //Selected project Id
+  public submitStatus: boolean | String = false;      //status of modifation (true if success, error message if failed)
 
   constructor(private firebase: FirebaseService, private dialog: MatDialog) { }
 
@@ -26,6 +27,7 @@ export class UpdateprojectComponent implements OnInit {
    *        String: doc id
    */
   public selectProject(id: string) {
+    this.submitStatus = false;
     this.projectId = id;
     this.firebase.readProject(id).then(proj => {
       this.project = new Project(proj.data());
@@ -50,7 +52,18 @@ export class UpdateprojectComponent implements OnInit {
     let diagRef = this.dialog.open(ConfirmdiagComponent, dialogConfig);     //open the diag and create the reference to it
 
     diagRef.afterClosed().toPromise().then((results: Boolean) => {          //Delete the project if confirmed
-      this.firebase.updateDoc(this.projectId, project.projectObj, this.project.projectObj);
+
+      if (results) {  
+        this.submitStatus = false;
+
+        this.firebase.updateDoc(this.projectId, project.projectObj, this.project.projectObj).then(() => {
+          this.submitStatus = true;
+          this.project = null;
+          this.projectId = null;
+        }).catch(err => {
+          this.submitStatus = err;
+        })
+      }
     });
   }
 

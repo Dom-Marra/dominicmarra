@@ -34,7 +34,7 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        z-index: 200;
+        z-index: map-get($z-indices, "nav-2");
         top: 50%;
         padding: 0;
         margin: 0;

@@ -4,7 +4,14 @@
     <div class="project-details-container">
         <ngx-simplebar id="simpBar">
             <div class="projectcard-details">
-                <div class="projectcard-images"></div>
+                <app-projectcarousel *ngIf="this.project.getImages().length > 0">
+                    <ng-container *sliderContents>
+                        <div *ngFor="let image of this.project.getImages()">
+                            <div class="projectcard-images" [ngStyle]="{'background-image': 'url(' + image + ')'}">
+                            </div>
+                        </div>
+                    </ng-container>
+                </app-projectcarousel>
                 <div class="projectcard-details" [innerHTML]="this.project.getDescription()">
                 </div>
                 <div class="project-technologies">

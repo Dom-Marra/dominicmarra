@@ -1,19 +1,11 @@
 <div class="carousel">
-    <h2 class="carousel-header">Projects</h2>
     <div #carousel class="slides-wrapper">
         <div class="slides-container">
             <fa-icon class="carousel-next" (click)="next()" [icon]="faChevronRight">next</fa-icon>
             <fa-icon class="carousel-previous" (click)="previous()" [icon]="faChevronLeft">previous</fa-icon>
             <div #slidesContainer class="carousel-slides">
-                <app-projectcard 
-                    #slide
-                    *ngFor="let project of projects; let i = index" 
-                    class="project original" 
-                    [project]="project"></app-projectcard>
-                <app-projectcard 
-                    *ngFor="let project of projects; let i = index" 
-                    class="project copy" 
-                    [project]="project"></app-projectcard>
+                <ng-container *ngTemplateOutlet="transcludeTemplate"></ng-container>
+                <ng-container *ngTemplateOutlet="transcludeTemplate"></ng-container>
             </div>
         </div>
     </div>

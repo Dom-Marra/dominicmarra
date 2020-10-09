@@ -1,5 +1,8 @@
-import { Component, HostListener, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit, QueryList, ViewChildren } from '@angular/core';
 import { ActiveFragService } from '../active-frag.service';
+import { FirebaseService } from '../firebase.service';
+import { Project } from '../project';
+import { options } from '../projectcarousel/projectcarousel.component';
 
 @Component({
   selector: 'app-home',
@@ -16,9 +19,25 @@ export class HomeComponent implements OnInit {
 
   public navOffsetHeight: number;                       
 
-  public top: number = 0;                                      //window scrollY value until active directive scroll can be re-enabled 
+  public top: number = 0;                       //window scrollY value until active directive scroll can be re-enabled 
 
-  constructor(private fragService: ActiveFragService) { 
+  public carouselOptions: options = {
+    slidesToDisplay: 3,
+    responsive: [
+      {
+        windowSize: 1250,
+        slidesToDisplay: 2,
+      },
+      {
+        windowSize: 790,
+        slidesToDisplay: 1,
+      }
+    ]
+  }
+
+  public projects: Array<Project> = [];                   //stores project doc data
+
+  constructor(private fragService: ActiveFragService, private firebase: FirebaseService) { 
 
     this.fragService.activeFragment.subscribe(activeFrag => {
     
@@ -38,6 +57,14 @@ export class HomeComponent implements OnInit {
         }
       }
     });
+
+    this.firebase.readAllDocuments().subscribe(projs => {     //get observable of all projects
+      this.projects = [];                                     //re-init projects
+
+      projs.forEach(proj => {                                 //create a project data for each project
+        this.projects.push(new Project(proj.data()));                      //push project data
+      })
+    })
   }
 
   ngOnInit(): void { }
@@ -52,5 +79,4 @@ export class HomeComponent implements OnInit {
   private setNavOffset(): void {
     this.navOffsetHeight = document.querySelector('#navbar-container').getBoundingClientRect().height;
   }
-
 }

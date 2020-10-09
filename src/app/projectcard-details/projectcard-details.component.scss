@@ -1,5 +1,4 @@
 @import '../../styles.scss';
-@include custom-base-button();
 
 .projectcard-details-header {
     text-align: center;
@@ -13,6 +12,8 @@
         border-radius: 0;
         overflow: hidden;
     }
+    
+    @include custom-base-button();
 }
   
 #simpBar {
@@ -34,7 +35,9 @@
             height: 60vw;
             max-width: 325px;
             max-height: 325px;
-            background-color: black;
+            background-size: contain;
+            background-position: center;
+            background-repeat: no-repeat;
         }
     
         .projectcard-details {

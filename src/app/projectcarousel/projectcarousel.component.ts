@@ -1,17 +1,35 @@
-import { Component, ElementRef, HostListener, OnInit, QueryList, ViewChild, ViewChildren, Renderer2, ViewContainerRef} from '@angular/core';
-import { Project, Technologies } from '../project';
+import { Component, ElementRef, HostListener, OnInit, ViewChild, Directive, ViewEncapsulation, ContentChild, TemplateRef, Host, ViewChildren, Input, OnChanges} from '@angular/core';
 import { faChevronRight, faChevronLeft } from '@fortawesome/free-solid-svg-icons';
+
+export interface options {
+  slidesToDisplay: number,
+  responsive?: Array<{
+    windowSize: number,
+    slidesToDisplay: number
+  }>
+}
+
+@Directive({
+  selector: '[sliderContents]'
+})
+export class TranscludeDirective { }
 
 @Component({
   selector: 'app-projectcarousel',
   templateUrl: './projectcarousel.component.html',
   styleUrls: ['./projectcarousel.component.scss'],
+  encapsulation: ViewEncapsulation.None
 })
 export class ProjectcarouselComponent implements OnInit {
 
+  @Input('options') carouselOptions: options = {
+    slidesToDisplay: 1
+  }
+
   @ViewChild('carousel') carousel: ElementRef;
   @ViewChild('slidesContainer') slidesContainer: ElementRef;
-  @ViewChildren('slide', {read: ElementRef}) slide: QueryList<ElementRef>;
+  @ContentChild(TranscludeDirective, { read: TemplateRef }) transcludeTemplate;
+  private slides: Array<Element> = [];
 
   @HostListener('window:resize')
   onResize() {
@@ -25,30 +43,6 @@ export class ProjectcarouselComponent implements OnInit {
 
   public currentSlideCount: number = 0;         //slider counter
 
-  //Test slides
-  public projects = [
-    new Project({name: "Vape It", caption: "Store Catalogue", thumbnail: "URL(TEST)", color: "FFD600", description: "Lorem ipsum dolor sit amet, " +
-    "consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim " + 
-    "veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor " + 
-    "in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat " + 
-    "non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.", images: [], technologies: [Technologies.HTML], projectLink: "", gitHubLink: ""}),
-    new Project({name: "BL3CALC", caption: "Borderlands 3 Build Planner", thumbnail:  "URL(TEST)", color: "00A0D2", description: "Lorem ipsum dolor sit amet, " +
-    "consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim " + 
-    "veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor " + 
-    "in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.", images: [],  technologies: [], projectLink: "", gitHubLink: ""}),
-    new Project({name: "Dominic Marra", caption: "Portfolio", thumbnail: "URL(TEST)", color: "FF00F5", description: "Lorem ipsum dolor sit amet, " +
-    "consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim " + 
-    "veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor " + 
-    "in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat " + 
-    "non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.", images: [], technologies: [], projectLink: "", gitHubLink: ""}),
-    new Project({name: "MAC: Mobile Attacks & Countermeasures", caption: "Malicious Attack Information", thumbnail: "URL(TEST)", color: "5b5e62", description: "Lorem ipsum dolor sit amet, " +
-    "consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim " + 
-    "veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.", images: [], technologies: [], projectLink: "", gitHubLink: ""}),
-    new Project({name: "WasteBook", caption: "Food Waste Log", thumbnail: "URL(TEST)", color: "8B4513", description: "Lorem ipsum dolor sit amet, " +
-    "consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim " + 
-    "veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.", images: [], technologies: [], projectLink: "", gitHubLink: ""})
-  ]
-
   constructor() { }
 
   ngOnInit(): void {
@@ -56,7 +50,7 @@ export class ProjectcarouselComponent implements OnInit {
   }
 
   ngAfterViewInit(): void {
-    this.setCarouselWidth();
+    this.reinitCarouselView();
   }
 
   /**
@@ -64,9 +58,11 @@ export class ProjectcarouselComponent implements OnInit {
    */
   public reinitCarouselView() {
 
+    this.slides = Array.from(this.slidesContainer.nativeElement.children);
+
     this.setCarouselWidth();                                                        //adjust width of carousel container
 
-    let slideWidth = this.slide.first.nativeElement.getBoundingClientRect().width;  //get width of a slide
+    let slideWidth = this.slides[0].getBoundingClientRect().width;                  //get width of a slide
 
     let slideAmount = slideWidth * this.currentSlideCount;                          //get amount to transition the slides container
 
@@ -86,19 +82,23 @@ export class ProjectcarouselComponent implements OnInit {
                       - parseFloat(carouselContStyle.paddingLeft)
                       - parseFloat(carouselContStyle.paddingRight);
 
-    let slideWidth = (carouselWidth / 3);             //initial slide width is a third of wrapper width
+    
+    let slidesToDisplay = this.carouselOptions.slidesToDisplay;
 
-    if (screenWidth > 790 && screenWidth <= 1250) {   //adjust slide width on screen width
-      slideWidth = (carouselWidth / 2);
-    } else if (screenWidth <= 790) {
-      slideWidth = carouselWidth;
+    let slideWidth = (carouselWidth / slidesToDisplay);             //initial slide width is a third of wrapper width
+
+    if (this.carouselOptions.responsive != null) {                  //adjust slide width on screen width
+      for (let resp of this.carouselOptions.responsive) {
+        if (resp.windowSize >= screenWidth) {
+          slideWidth = (carouselWidth / resp.slidesToDisplay);
+        }
+      }
     }
 
-    slidesContainerWidth = slideWidth * (this.projects.length * 2);   //calculate slides container width to account for double the amount of slides
+    slidesContainerWidth = slideWidth * this.slides.length;   //calculate slides container width to account for double the amount of slides
 
     this.slidesContainer.nativeElement.style.width = slidesContainerWidth.toFixed(0) + 'px';  //set inline width of slides container
   }
-
 
   /**
    * Moves the carousel to reveal the next slide
@@ -106,9 +106,9 @@ export class ProjectcarouselComponent implements OnInit {
   public next() {
 
     if (this.isAnimating) return;                                                   //return if currently animating
-    let slideWidth = this.slide.first.nativeElement.getBoundingClientRect().width;  //get width of a slide
+    let slideWidth = this.slides[0].getBoundingClientRect().width;                  //get width of a slide
 
-    if (this.currentSlideCount - 1 == ((this.projects.length * -1) - 1)) {          //once the end is reached reset to the first slide
+    if (this.currentSlideCount - 1 == (((this.slides.length / 2) * -1) - 1)) {      //once the end is reached reset to the first slide
       let offsetSlideCount = 0;
 
       this.animateMovement(0, true);
@@ -128,10 +128,10 @@ export class ProjectcarouselComponent implements OnInit {
     
     if (this.isAnimating) return;                                                   //return if currently animating
     
-    let slideWidth = this.slide.first.nativeElement.getBoundingClientRect().width;  //get width of a slide
+    let slideWidth = this.slides[0].getBoundingClientRect().width;                  //get width of a slide
 
     if (this.currentSlideCount + 1 == 1) {                                          //if slide reaches the start move to end - 1 (account for movement)
-      let offsetSlideCount = ((this.projects.length * -1) - 1);
+      let offsetSlideCount = (((this.slides.length / 2) * -1) - 1);
       let offsetTransition = (slideWidth * offsetSlideCount) + slideWidth;          //calc slide amount
 
       this.animateMovement(offsetTransition, true);                                 //transition the slides container

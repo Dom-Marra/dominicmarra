@@ -30,7 +30,7 @@ import { AppComponent } from './app.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { HomeComponent } from './home/home.component';
 import { ProjectcardComponent } from './projectcard/projectcard.component';
-import { ProjectcarouselComponent } from './projectcarousel/projectcarousel.component';
+import { ProjectcarouselComponent, TranscludeDirective } from './projectcarousel/projectcarousel.component';
 import { ProjectcardDetailsComponent } from './projectcard-details/projectcard-details.component';
 import { ContactmeComponent } from './contactme/contactme.component';
 import { FooterComponent } from './footer/footer.component';
@@ -68,7 +68,8 @@ export const CUSTOM_MAT_COLOR_FORMATS: MatColorFormats = {
     DeleteprojectComponent,
     ProjectformComponent,
     ProjectselectComponent,
-    ConfirmdiagComponent
+    ConfirmdiagComponent,
+    TranscludeDirective
   ],
   imports: [
     BrowserModule,

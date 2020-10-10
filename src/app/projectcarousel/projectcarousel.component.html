@@ -1,13 +1,13 @@
 <div class="carousel">
     <div #carousel class="slides-wrapper">
         <div class="slides-container">
-            <fa-icon class="carousel-next" (click)="next()" [icon]="faChevronRight">next</fa-icon>
-            <fa-icon class="carousel-previous" (click)="previous()" [icon]="faChevronLeft">previous</fa-icon>
             <div #slidesContainer class="carousel-slides">
                 <ng-container *ngTemplateOutlet="transcludeTemplate"></ng-container>
                 <ng-container *ngTemplateOutlet="transcludeTemplate"></ng-container>
             </div>
         </div>
     </div>
+    <fa-icon class="carousel-next" (click)="next()" [icon]="faChevronRight" unselectable="on">next</fa-icon>
+    <fa-icon class="carousel-previous" (click)="previous()" [icon]="faChevronLeft" unselectable="on">previous</fa-icon>
 </div>
 

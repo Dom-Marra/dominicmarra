@@ -1,9 +1,47 @@
 @import '../../styles.scss';
 
 .carousel {
-    width: 100%;
+    position: relative;
+    width: 95%;
+    max-width: calc(100% - 19px);
     height: 100%;
+    margin: auto;
 }
+
+.carousel-next, .carousel-previous {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    top: 50%;
+    transform: translateY(-50%);
+    padding: 0;
+    margin: 0;
+    opacity: 1;
+    z-index: map-get($z-indices, "nav-2");
+    color: mat-color($dominicmarra-accent, 50);
+    @include mat-typography-level-to-styles($dominicmarra-typography, body-1);
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+
+    &:hover {
+        cursor: pointer;
+    }
+}
+
+.carousel-next {
+    right: -9px;
+}
+
+.carousel-previous {
+    left: -9px;
+}
+
 
 .slides-wrapper {
     position: relative;
@@ -18,39 +56,6 @@
     position: relative;
     height: 100%;
 
-    .carousel-next, .carousel-previous {
-        position: absolute;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        z-index: map-get($z-indices, "nav-2");
-        top: 50%;
-        transform: translateY(-50%);
-        padding: 0;
-        margin: 0;
-        color: mat-color($dominicmarra-accent, 50);
-        width: 3vw;
-        max-width: 70px;
-        height: 15vh;
-        max-height: 130px;
-        opacity: 0.5;
-        @include mat-typography-level-to-styles($dominicmarra-typography, subheading-2);
-
-        &:hover {
-            opacity: 1;
-            cursor: pointer;
-            color: mat-color($dominicmarra-accent, 50);
-        }
-    }
-
-    .carousel-next {
-        right: 0;
-    }
-
-    .carousel-previous {
-        left: 0;
-    }
-
     .carousel-slides {
         display: flex;
         height: 100%;
@@ -58,29 +63,5 @@
 
     .carousel-slides > * {
         flex: 1;
-    }
-}
-
-
-
-@media only screen and (max-width: 1250px) { 
-
-    .carousel { 
-
-        .carousel-next, .carousel-previous {
-            width: 5vw;
-            height: 15vh;
-        }
-    }
-}
-
-
-@media only screen and (max-width: 790px) { 
-
-    .project-carousel {  
-
-        .carousel-next, .carousel-previous {
-            width: 10%;
-        }
     }
 }

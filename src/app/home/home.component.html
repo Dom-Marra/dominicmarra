@@ -13,8 +13,7 @@
     </div>
     <div appActiveFragment [offset]="navOffsetHeight" id="my-projects" class="home-component">
         <h2 id="projects-header">Projects</h2>
-
-        <app-projectcarousel *ngIf="this.projects.length > 0" [options]="carouselOptions">
+        <app-projectcarousel id="projects-carousel" *ngIf="this.projects.length > 0" [options]="carouselOptions">
             <ng-container *sliderContents>
                 <app-projectcard
                 #slide

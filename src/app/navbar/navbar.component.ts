@@ -108,23 +108,23 @@ export class NavbarComponent implements OnInit {
   }
 
   /**
-   * Adds active class to a nav link
+   * Adds hovered class to a nav link
    * 
-   * @param navLink 
-   *        HTMLElement: the nav link
+   * @param event 
+   *        Event that fired the function
    */
-  public addActive(navLink: HTMLElement) {
-    navLink.classList.add('active');
+  public addHovered(event) {
+    if (!event.sourceCapabilities.firesTouchEvents) event.target.classList.add('hovered');
   }
 
   /**
-   * Removes active class to a nav link
+   * Removes hovered class to a nav link
    * 
-   * @param navLink 
-   *        HTMLElement: the nav link
+   * @param event 
+   *         Event that fired the function
    */
-  public removeActive(navLink: HTMLElement) {
-    navLink.classList.remove('active');
+  public removeHovered(event) {
+    event.target.classList.remove('hovered');
   }
 
 }

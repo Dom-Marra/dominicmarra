@@ -1,8 +1,8 @@
 <div #navContainer [@shrinkEnlarge]="{value: this.navBarSize, params: {navBarHeight: this.navBarCurrentHeight }}" id="navbar-container">
     <h1 id="navbar-name">Dominic Marra</h1>
     <ul id="nav-items" class="mat-subheading-2">
-        <li class="nav-item" routerLink='/home' fragment="about-me-container" [class.active]="activeFragment === 'about-me-container'">About Me</li>
-        <li class="nav-item" routerLink='/home' fragment="my-projects" [class.active]="activeFragment === 'my-projects'">Projects</li>
-        <li class="nav-item" routerLink='/home' fragment="contact-me"  [class.active]="activeFragment === 'contact-me'">Contact Me</li>
+        <li (mouseenter)="addActive($event.target)" (mouseleave)="removeActive($event.target)" class="nav-item" routerLink='/home' fragment="about-me-container" [class.active]="activeFragment === 'about-me-container'">About Me</li>
+        <li (mouseenter)="addActive($event.target)" (mouseleave)="removeActive($event.target)" class="nav-item" routerLink='/home' fragment="my-projects" [class.active]="activeFragment === 'my-projects'">Projects</li>
+        <li (mouseenter)="addActive($event.target)" (mouseleave)="removeActive($event.target)" class="nav-item" routerLink='/home' fragment="contact-me"  [class.active]="activeFragment === 'contact-me'">Contact Me</li>
     </ul>
 </div>

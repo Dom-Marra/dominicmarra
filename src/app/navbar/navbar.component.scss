@@ -44,7 +44,7 @@
             outline: none;
             transition: transform 0.15s ease-out;
 
-            &.active {
+            &.active, &.hovered {
                 transform: translateY(10px);
                 color: mat-color($dominicmarra-accent, '50-contrast');
             }

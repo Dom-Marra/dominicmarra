@@ -1,4 +1,4 @@
-import { Component, HostListener, OnInit, QueryList, ViewChildren } from '@angular/core';
+import { Component, ElementRef, HostListener, OnInit, QueryList, ViewChildren } from '@angular/core';
 import { ActiveFragService } from '../active-frag.service';
 import { FirebaseService } from '../firebase.service';
 import { Project } from '../project';
@@ -36,19 +36,32 @@ export class HomeComponent implements OnInit {
   }
 
   public projects: Array<Project> = [];                   //stores project doc data
+  private activeFrag;
 
-  constructor(private fragService: ActiveFragService, private firebase: FirebaseService) { 
+  constructor(private fragService: ActiveFragService, private firebase: FirebaseService, private element: ElementRef) { 
 
-    this.fragService.activeFragment.subscribe(activeFrag => {
-    
+    this.firebase.readAllDocuments().subscribe(projs => {     //get observable of all projects
+      this.projects = [];                                     //re-init projects
+
+      projs.forEach(proj => {                                 //create a project data for each project
+        this.projects.push(new Project(proj.data()));         //push project data
+      });
+
+    });
+  }
+
+  ngOnInit(): void { }
+
+  ngAfterContentInit(): void {
+    this.setNavOffset();
+
+    this.activeFrag = this.fragService.activeFragment.subscribe(activeFrag => {        
       if (activeFrag.getWasRouted()) {
         let el = document.querySelector('#' + activeFrag.getFragment());  //element to scroll to
 
         if (el != null) {                                                 //only scroll if an element was found
-          let top = Math.ceil(el.getBoundingClientRect().top              //calculate the scroll amount
-                  - this.navOffsetHeight 
-                  + window.scrollY);
-                  
+          let top = el.getBoundingClientRect().top -                      //calculate the scroll amount
+                    this.element.nativeElement.getBoundingClientRect().top;            
           try {
             window.scrollTo({behavior: "smooth", top: top});
           } catch (e) {
@@ -57,21 +70,12 @@ export class HomeComponent implements OnInit {
         }
       }
     });
-
-    this.firebase.readAllDocuments().subscribe(projs => {     //get observable of all projects
-      this.projects = [];                                     //re-init projects
-
-      projs.forEach(proj => {                                 //create a project data for each project
-        this.projects.push(new Project(proj.data()));                      //push project data
-      })
-    })
   }
 
-  ngOnInit(): void { }
-
-  ngAfterContentInit(): void {
-    this.setNavOffset();
+  ngOnDestroy() {
+    this.activeFrag.unsubscribe();
   }
+
 
   /**
    * Set offset for Active Fragment directive based on the navbar height

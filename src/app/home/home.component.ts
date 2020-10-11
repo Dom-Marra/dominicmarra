@@ -1,5 +1,7 @@
-import { Component, ElementRef, HostListener, OnInit, QueryList, ViewChildren } from '@angular/core';
+import { Component, ElementRef, HostListener, OnInit } from '@angular/core';
+import { BehaviorSubject } from 'rxjs';
 import { ActiveFragService } from '../active-frag.service';
+import { Activefragment } from '../activefragment';
 import { FirebaseService } from '../firebase.service';
 import { Project } from '../project';
 import { options } from '../projectcarousel/projectcarousel.component';
@@ -36,9 +38,10 @@ export class HomeComponent implements OnInit {
   }
 
   public projects: Array<Project> = [];                   //stores project doc data
-  private activeFrag;
+  private activeFrag: BehaviorSubject<Activefragment>;    //frag service active fragment
 
   constructor(private fragService: ActiveFragService, private firebase: FirebaseService, private element: ElementRef) { 
+    this.activeFrag = this.fragService.activeFragment;
 
     this.firebase.readAllDocuments().subscribe(projs => {     //get observable of all projects
       this.projects = [];                                     //re-init projects
@@ -46,7 +49,6 @@ export class HomeComponent implements OnInit {
       projs.forEach(proj => {                                 //create a project data for each project
         this.projects.push(new Project(proj.data()));         //push project data
       });
-
     });
   }
 
@@ -55,7 +57,7 @@ export class HomeComponent implements OnInit {
   ngAfterContentInit(): void {
     this.setNavOffset();
 
-    this.activeFrag = this.fragService.activeFragment.subscribe(activeFrag => {        
+    this.activeFrag.subscribe(activeFrag => {        
       if (activeFrag.getWasRouted()) {
         let el = document.querySelector('#' + activeFrag.getFragment());  //element to scroll to
 

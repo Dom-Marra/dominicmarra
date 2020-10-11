@@ -107,4 +107,24 @@ export class NavbarComponent implements OnInit {
     }
   }
 
+  /**
+   * Adds active class to a nav link
+   * 
+   * @param navLink 
+   *        HTMLElement: the nav link
+   */
+  public addActive(navLink: HTMLElement) {
+    navLink.classList.add('active');
+  }
+
+  /**
+   * Removes active class to a nav link
+   * 
+   * @param navLink 
+   *        HTMLElement: the nav link
+   */
+  public removeActive(navLink: HTMLElement) {
+    navLink.classList.remove('active');
+  }
+
 }

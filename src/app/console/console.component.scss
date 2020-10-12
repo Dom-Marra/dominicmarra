@@ -1,7 +1,7 @@
 @import '../../styles.scss';
 
 #console-container {
-    min-height: calc(100vh - 90px);
+    min-height: calc(100vh - 75px);
     height: 100%;
 
     #side-nav {
@@ -10,6 +10,7 @@
         color: mat-color($dominicmarra-primary, 50);
         height: 100%;
         position: fixed;
+        top: 75px;
         z-index: map-get($z-indices, "nav-1");
 
         li {
@@ -32,14 +33,6 @@
             .nav-text {
                 padding-left: 10px;
             }
-
-            
-        }
-
-        &.adjustScrollFixed {
-            transform: translateY(-10px);
-            transition: transform 0.1s;
-            
         }
     }
 
@@ -52,6 +45,7 @@
 
 @media only screen and (max-width: 790px) { 
     #console-container {
+        margin-top: 75px;
 
         #side-nav {
             width: 100%;
@@ -86,12 +80,6 @@
                 .nav-icon {
                     display: inline-block;
                 }
-            }
-    
-            &.adjustScrollFixed {
-                transform: translateY(0px);
-                transition: transform 0.1s;
-                
             }
         }
     

@@ -2,7 +2,7 @@
 
 .carousel {
     position: relative;
-    max-width: calc(100% - 50px);
+    max-width: calc(100% - 40px);
     height: 100%;
     margin: auto;
 }
@@ -36,11 +36,11 @@
 }
 
 .carousel-next {
-    right: -25px;
+    right: -19px;
 }
 
 .carousel-previous {
-    left: -25px;
+    left: -19px;
 }
 
 .slides-wrapper {

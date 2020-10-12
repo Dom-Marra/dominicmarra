@@ -1,13 +1,13 @@
 @import '../../styles.scss';
 
 #navbar-container {
-    position: sticky;
+    position: fixed;
     top: 0;
     display: flex;
     justify-content: space-between;
     align-items: center;
     background-color: mat-color($dominicmarra-accent, 50);
-    height: 90px;
+    height: 75px;
     width: 100%;
     box-shadow: 0px 4px 5px 0px rgba(0, 0, 0, 0.33);
     z-index: map-get($z-indices, "nav-2");
@@ -60,19 +60,14 @@
 
 @media only screen and (max-width: 790px) {
     #navbar-container {
-        flex-wrap: wrap;
-        height: 110px;
 
         #navbar-name {
-            width: 100%;
-            margin: 0;
-            margin-top: 10px;
-            @include mat-typography-level-to-styles($dominicmarra-typography, title);
+            display: none;
         }
     
         #nav-items {
             width: 100%;
-            height: 50px;
+            height: 100%;
             justify-content: center;
 
             .nav-item {
@@ -80,10 +75,6 @@
                 width: 33%;
                 text-align: center;
                 @include mat-typography-level-to-styles($dominicmarra-typography, body-1);
-            }
-    
-            .nav-item:hover {
-                cursor: pointer;
             }
         }
     }

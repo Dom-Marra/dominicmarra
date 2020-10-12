@@ -1,4 +1,4 @@
-import { Component, ElementRef, HostListener, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { ActiveFragService } from '../active-frag.service';
 import { Activefragment } from '../activefragment';
@@ -12,18 +12,11 @@ import { options } from '../projectcarousel/projectcarousel.component';
   styleUrls: ['./home.component.scss']
 })
 
-export class HomeComponent implements OnInit {
+export class HomeComponent implements OnInit {          
 
-  @HostListener('window:resize')
-  onResize() {
-    this.setNavOffset();
-  }
+  public fragOffset: number = 75;                 //offset for fragement directive
 
-  public navOffsetHeight: number;                       
-
-  public top: number = 0;                       //window scrollY value until active directive scroll can be re-enabled 
-
-  public carouselOptions: options = {
+  public carouselOptions: options = {             //carousel options
     slidesToDisplay: 3,
     responsive: [
       {
@@ -54,8 +47,7 @@ export class HomeComponent implements OnInit {
 
   ngOnInit(): void { }
 
-  ngAfterContentInit(): void {
-    this.setNavOffset();
+  ngAfterViewInit() {
 
     this.activeFrag.subscribe(activeFrag => {        
       if (activeFrag.getWasRouted()) {
@@ -72,17 +64,5 @@ export class HomeComponent implements OnInit {
         }
       }
     });
-  }
-
-  ngOnDestroy() {
-    this.activeFrag.unsubscribe();
-  }
-
-
-  /**
-   * Set offset for Active Fragment directive based on the navbar height
-   */
-  private setNavOffset(): void {
-    this.navOffsetHeight = document.querySelector('#navbar-container').getBoundingClientRect().height;
   }
 }

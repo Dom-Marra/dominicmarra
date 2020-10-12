@@ -3,28 +3,24 @@
 @import '~quill/dist/quill.bubble.css';
 @import '~quill/dist/quill.snow.css';
 
-html, body { 
-  min-height: 100vh;
+html {
+  height: 100%;
 }
 
 body {  
-  margin: 0; 
-}
-
-.cdk-global-scrollblock {
-  position: static;
+  margin: 0;
+  min-height: 100%;
 }
 
 .simplebar-vertical  {
   width: 7px !important; 
 }
 
-
 .simplebar-hover .simplebar-scrollbar:before, 
 .simplebar-mouse-entered .simplebar-scrollbar:before, 
 .simplebar-scrollbar.simplebar-visible:before, 
 .simplebar-scrolling .simplebar-scrollbar:before {
-    opacity: 1;
+    opacity: 1 !important; 
 }
 
 $z-indices: ("nav-2": 500, "nav-1": 400, "content-3": 300, "content-2": 200, "content-1": 100);

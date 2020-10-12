@@ -1,4 +1,4 @@
-<div #navContainer [@shrinkEnlarge]="{value: this.navBarSize, params: {navBarHeight: this.navBarCurrentHeight }}" id="navbar-container">
+<div #navContainer id="navbar-container">
     <h1 id="navbar-name">Dominic Marra</h1>
     <ul id="nav-items" class="mat-subheading-2">
         <li (mouseenter)="addHovered($event)" (mouseleave)="removeHovered($event)"  class="nav-item" routerLink='/home' fragment="about-me-container" [class.active]="activeFragment === 'about-me-container'">About Me</li>

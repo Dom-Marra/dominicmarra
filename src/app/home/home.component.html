@@ -1,5 +1,5 @@
 <div id="home-container">
-    <div appActiveFragment [offset]="navOffsetHeight" id="about-me-container">
+    <div appActiveFragment [offset]="fragOffset" id="about-me-container">
         <div id="about-me-contents">
             <div id="about-me-img" aria-label="about me image"></div>
             <div id="about-me-text-container">
@@ -11,7 +11,7 @@
             </div>
         </div>
     </div>
-    <div appActiveFragment [offset]="navOffsetHeight" id="my-projects" class="home-component">
+    <div appActiveFragment [offset]="fragOffset" id="my-projects">
         <h2 id="projects-header">Projects</h2>
         <app-projectcarousel id="projects-carousel" *ngIf="this.projects.length > 0" [options]="carouselOptions">
             <ng-container *sliderContents>
@@ -23,7 +23,7 @@
             </ng-container>
         </app-projectcarousel>
     </div>
-    <div appActiveFragment [offset]="navOffsetHeight" id="contact-me" class="home-component">
+    <div appActiveFragment [offset]="fragOffset" id="contact-me">
         <app-contactme></app-contactme>
     </div>
 </div>

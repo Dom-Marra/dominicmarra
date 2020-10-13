@@ -1,5 +1,6 @@
 import { Component, ElementRef, HostListener, OnInit, ViewChild, Directive, ViewEncapsulation, ContentChild, TemplateRef, Host, ViewChildren, Input, OnChanges} from '@angular/core';
 import { faChevronRight, faChevronLeft } from '@fortawesome/free-solid-svg-icons';
+import { GestureController } from '@ionic/angular';
 
 export interface options {
   slidesToDisplay: number,
@@ -43,14 +44,84 @@ export class ProjectcarouselComponent implements OnInit {
 
   public currentSlideCount: number = 0;         //slider counter
 
-  constructor() { }
+  public swipeAmnt: number = 0;                 //current swipe amount
+
+  constructor(private gestureCtrl: GestureController) { }
 
   ngOnInit(): void {
+  }
+
+  /**
+   * Handles when the swipe event is occuring
+   * 
+   * @param swipe 
+   *        swipe data object
+   */
+  public onSwipe(swipe) {
+    let slideWidth = this.slides[0].getBoundingClientRect().width;           //get the slides width
+    let swipeAmnt = this.swipeAmnt + swipe.deltaX;                           //Updated swipe amount is current + the swipe X delta 
+
+    let slideContWidth = this.slidesContainer.nativeElement.offsetWidth;     //swipe container width
     
+     //If the updated swipe amount is less than negative half of the slide container
+     //Or the swipe amount is greater than zero then update the slides to be in view
+    if (swipeAmnt < slideContWidth / -2 || swipeAmnt > 0) {                
+      swipeAmnt = swipeAmnt + ((slideContWidth / 2) * Math.floor(swipeAmnt / (slideContWidth / -2)));  
+    }
+
+    this.currentSlideCount = (swipeAmnt / slideWidth);      //update current slide count
+    this.animateMovement(swipeAmnt, true);                  //animate the swipe
+  }
+
+  /**
+   * Handles when the swipe event starts
+   */
+  public onSwipeStart() {
+    let slideWidth = this.slides[0].getBoundingClientRect().width;        //slide width
+    this.swipeAmnt = slideWidth * this.currentSlideCount;                 //update swipe amount 
+
+    this.slidesContainer.nativeElement.classList.add('disable-click');    //disable click events
+  }
+
+  /**
+   * Handles when the swipe event ends on the carousel
+   * 
+   * @param swipe
+   *        the data passed by the swip event 
+   */
+  public onSwipeEnd(swipe) {
+    let slideWidth = this.slides[0].getBoundingClientRect().width;        //slide width
+    this.swipeAmnt = slideWidth * this.currentSlideCount;                 //update slide amount
+    let slideDifference: number = 0;                                      //difference between the start and end x values
+
+
+    //Update Slide difference and current slide depending on start and end x values
+    if (swipe.startX > swipe.currentX) {                                               
+      slideDifference = Math.floor(this.currentSlideCount) - this.currentSlideCount;    //right swipe => adjust to left
+      this.currentSlideCount = Math.floor(this.currentSlideCount);                      
+    } else {
+      slideDifference = Math.ceil(this.currentSlideCount) - this.currentSlideCount;     //left swipe => adjust to right
+      this.currentSlideCount = Math.ceil(this.currentSlideCount);
+    }
+
+    let slideAmount = (slideWidth * slideDifference) + this.swipeAmnt;      //amount to slide by to get the appropriate slide
+    this.animateMovement(slideAmount);                                    
+
+    this.slidesContainer.nativeElement.classList.remove('disable-click');   //re-enable click events
   }
 
   ngAfterViewInit(): void {
     this.reinitCarouselView();
+
+    //Gesture object
+    const gesture = this.gestureCtrl.create({
+      el: this.slidesContainer.nativeElement,
+      gestureName: 'carousel-swipe',
+      onMove: (swipe) => { this.onSwipe(swipe); },
+      onEnd: (swipe) => { this.onSwipeEnd(swipe) },
+      onStart: () => { this.onSwipeStart() }
+    });
+    gesture.enable();
   }
 
   /**
@@ -155,7 +226,7 @@ export class ProjectcarouselComponent implements OnInit {
 
     this.slidesContainer.nativeElement.animate([
       {transform: 'translateX(' + slideAmount + 'px)'}
-    ], {fill: 'both', easing: 'ease-in-out', duration: instant ? 0 : 300}).finished.then(() => {
+    ], {fill: 'both', easing: 'ease-in-out', duration: instant ? 0 : 400}).finished.then(() => {
       this.slidesContainer.nativeElement.style.transform = 'translateX(' + slideAmount + 'px)';       //adjust inline style
       this.isAnimating = false;                                                                       //animation is complete
     });

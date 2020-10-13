@@ -19,12 +19,16 @@
             height: 350px;
             width: 95%;
 
-            #about-me-img {
+            #about-me-img, #about-me-img-repos {
                 align-self: center;
                 display: inline-block;
-                height: 350px;
                 width: 350px;
+                height: 350px;
                 background-color: mat-color($dominicmarra-accent, 50);
+            }
+
+            #about-me-img-repos {
+                display: none;
             }
     
             #about-me-text-container {
@@ -81,12 +85,14 @@
 
 }
 
-@media only screen and (max-width: 790px) { 
+@media only screen and (max-width: 790px), 
+            screen and (orientation: landscape) and (device-max-height: 1000px) { 
     #home-container {
 
         #about-me-container {
             width: 75%;
             margin: auto;
+            min-height: auto;
 
             #about-me-contents {
                 height: auto;
@@ -97,6 +103,15 @@
                     visibility: hidden;
                 }
 
+                #about-me-img-repos {
+                    width: 100%;
+                    max-width: 350px;
+                    padding-bottom: 350px;
+                    margin: auto;
+                    height: 0;
+                    display: block;
+                }
+
                 #about-me-text-container { 
                     align-items: center;
                     width: 100%;
@@ -104,7 +119,13 @@
                     height: auto;
 
                     #about-me-header {
-                        padding-bottom: 50px;
+                        text-align: center;
+                        padding: 75px 0;
+                    }
+                    
+                    #about-me-text {
+                        padding: 75px 0;
+                        text-align: center;
                     }
                     
                 }

@@ -4,7 +4,7 @@
             <h3 class="highlight-text">{{this.project.getName()}}</h3>
             <p class="projectcard-caption mat-caption highlight-text">{{this.project.getCaption()}}</p>
         </div>
-        <div class="projectcard-image" [ngStyle]="{'background-image': 'url(' + this.project.getThumbnail() + ')'}"></div>
+        <img class="projectcard-image" [src]="this.project.getThumbnail()" alt="{{this.project.getName()}} image">
         <div class="projectcard-expand highlight-text">
             <p class="mat-caption">About</p>
         </div>

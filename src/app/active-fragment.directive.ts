@@ -36,10 +36,17 @@ export class ActiveFragmentDirective {
 
       let top = Math.max(window.scrollY, Math.abs(document.documentElement.offsetTop), Math.abs(document.body.offsetTop));
 
+      //Calculate if whole component is in the view 
+      if (compTop > top + this.offset && compBottom < top + window.innerHeight + this.offset) {
+        this.fragService.setActiveFrag(new Activefragment(this.el.nativeElement.id, false));
+        return;
+      }
+
       //calculate if the top portion of the window is within component
       if (Math.ceil(top) + this.offset + 50 > compTop && compBottom > Math.ceil(top) + this.offset + 50) {
         this.fragService.setActiveFrag(new Activefragment(this.el.nativeElement.id, false));     //update frag service active fragment
       } 
+      
   }
 
 }

@@ -43,6 +43,9 @@ import { DeleteprojectComponent } from './console/deleteproject/deleteproject.co
 import { ProjectformComponent } from './console/projectform/projectform.component';
 import { ProjectselectComponent } from './console/projectselect/projectselect.component';
 import { ConfirmdiagComponent } from './console/confirmdiag/confirmdiag.component';
+import { EmailresponseComponent } from './contactme/emailresponse/emailresponse.component';
+
+import { HttpClientModule } from '@angular/common/http';
 
 export const CUSTOM_MAT_COLOR_FORMATS: MatColorFormats = {
   display: {
@@ -69,7 +72,8 @@ export const CUSTOM_MAT_COLOR_FORMATS: MatColorFormats = {
     ProjectformComponent,
     ProjectselectComponent,
     ConfirmdiagComponent,
-    TranscludeDirective
+    TranscludeDirective,
+    EmailresponseComponent
   ],
   imports: [
     BrowserModule,
@@ -87,12 +91,13 @@ export const CUSTOM_MAT_COLOR_FORMATS: MatColorFormats = {
     MatSelectModule,
     NgxMatFileInputModule,
     NgxMatColorPickerModule,
-    QuillModule.forRoot()
+    QuillModule.forRoot(),
+    HttpClientModule
   ],
   providers: [
     { provide: MAT_COLOR_FORMATS, useValue: CUSTOM_MAT_COLOR_FORMATS }
   ],
   bootstrap: [AppComponent],
-  entryComponents: [ProjectcardDetailsComponent, ConfirmdiagComponent]
+  entryComponents: [ProjectcardDetailsComponent, ConfirmdiagComponent, EmailresponseComponent]
 })
 export class AppModule { }

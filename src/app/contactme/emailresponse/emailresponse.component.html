@@ -1,0 +1,7 @@
+<h2 mat-dialog-title *ngIf="success">Success</h2>
+<h2 mat-dialog-title *ngIf="!success">Error</h2>
+<mat-dialog-content *ngIf="success"><p>The email was successfully sent!</p></mat-dialog-content>
+<mat-dialog-content *ngIf="!success"><p>An error occured while trying to send your email, if this issue persists you can contact me at: dominicmarra321@gmail.com</p></mat-dialog-content>
+<mat-dialog-actions>
+    <button mat-button mat-dialog-close>close</button>
+</mat-dialog-actions>

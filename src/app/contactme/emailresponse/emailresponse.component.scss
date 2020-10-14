@@ -1,0 +1,10 @@
+@import '../../../styles.scss';
+
+@include custom-base-button();
+ h2 {
+     text-align: center;
+ }
+
+ button {
+    margin: auto;
+ }

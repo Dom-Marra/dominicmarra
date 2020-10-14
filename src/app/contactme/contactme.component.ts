@@ -1,6 +1,9 @@
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-import { FormGroup, FormControl } from '@angular/forms';
+import { HttpClient } from '@angular/common/http';
+import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
+import { FormGroup, FormControl, NgForm } from '@angular/forms';
 import { Validators } from '@angular/forms';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
+import { EmailresponseComponent } from './emailresponse/emailresponse.component';
 
 @Component({
   selector: 'app-contactme',
@@ -9,6 +12,8 @@ import { Validators } from '@angular/forms';
   encapsulation: ViewEncapsulation.None
 })
 export class ContactmeComponent implements OnInit {
+  
+  @ViewChild('formDirective') private formDirective: NgForm;  //used for resetting the form without erros
 
   contactForm = new FormGroup({                                             //contact form values
     email: new FormControl('', [Validators.email, Validators.required]),
@@ -16,7 +21,7 @@ export class ContactmeComponent implements OnInit {
     description: new FormControl('', Validators.required)
   });
 
-  constructor() { }
+  constructor(private http: HttpClient, private dialog: MatDialog) { }
 
   ngOnInit(): void {
     
@@ -26,7 +31,22 @@ export class ContactmeComponent implements OnInit {
    * Submits the contact form
    */
   public submitForm(): void { 
-    console.log(this.contactForm.value);
+    this.contactForm.disable();
+
+    this.http.post("https://us-central1-dominicmarra-95b72.cloudfunctions.net/sendEmail", JSON.stringify(this.contactForm.value)).subscribe(value => {
+      this.contactForm.enable();
+
+      const dialogConfig = new MatDialogConfig();         //confirmation dialog config
+      
+      dialogConfig.data = { success: value };
+
+      if (value) {
+        this.contactForm.reset('');
+        this.formDirective.resetForm('');
+      } 
+
+      this.dialog.open(EmailresponseComponent, dialogConfig);     //open the diag and create the reference to it
+    })
   }
 
   /**

@@ -52,7 +52,7 @@
         </mat-form-field>
         <mat-form-field [hideRequiredMarker]="true" class="form-field" appearance="outline">
             <mat-label>Technologies</mat-label>
-            <mat-select matInput name="technologies" class="custom-select" placeholder="Select Tech" autocomplete="off" formControlName="technologies" multiple>
+            <mat-select matInput name="technologies" class="custom-select" panelClass="custom-dropdown" placeholder="Select Tech" autocomplete="off" formControlName="technologies" multiple>
                 <mat-option *ngFor="let tech of techKeys()" [value]="tech">{{tech}}</mat-option>
             </mat-select>
             <mat-error *ngIf="projectForm.controls.technologies.invalid">Please select at least one technology</mat-error>

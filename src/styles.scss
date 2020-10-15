@@ -53,13 +53,6 @@ $z-indices: ("nav-2": 500, "nav-1": 400, "content-3": 300, "content-2": 200, "co
   .mat-error {
       color: mat-color($dominicmarra-warn, 50);
   }
-
-  .mat-pseudo-checkbox {
-
-    &::after {
-        color: black !important;
-    }
-  }
 }
 
 @mixin custom-base-button {
@@ -81,6 +74,3 @@ $z-indices: ("nav-2": 500, "nav-1": 400, "content-3": 300, "content-2": 200, "co
     }
   }
 }
-
-//TODO: Variables for footer and navbar heights
-

@@ -31,21 +31,23 @@ export class ContactmeComponent implements OnInit {
    * Submits the contact form
    */
   public submitForm(): void { 
-    this.contactForm.disable();
+    this.contactForm.disable();                           //disable contact form
 
-    this.http.post("https://us-central1-dominicmarra-95b72.cloudfunctions.net/sendEmail", JSON.stringify(this.contactForm.value)).subscribe(value => {
-      this.contactForm.enable();
+    let email = this.http.post("https://us-central1-dominicmarra-95b72.cloudfunctions.net/sendEmail", JSON.stringify(this.contactForm.value)).subscribe(value => {
+      this.contactForm.enable();                          //re-emnable contact form
 
-      const dialogConfig = new MatDialogConfig();         //confirmation dialog config
+      const dialogConfig = new MatDialogConfig();         //response dialog config
       
-      dialogConfig.data = { success: value };
+      dialogConfig.data = { success: value };             //set response dialog data
 
-      if (value) {
+      if (value) {                                        //reset form if email sent successfully
         this.contactForm.reset('');
         this.formDirective.resetForm('');
       } 
 
-      this.dialog.open(EmailresponseComponent, dialogConfig);     //open the diag and create the reference to it
+      this.dialog.open(EmailresponseComponent, dialogConfig);     //open the response diag
+
+      email.unsubscribe();                                        //unsub from the email request
     })
   }
 

@@ -7,7 +7,7 @@ import { AddprojectComponent } from '../app/console/addproject/addproject.compon
 import { DeleteprojectComponent } from '../app/console/deleteproject/deleteproject.component';
 import { UpdateprojectComponent } from '../app/console/updateproject/updateproject.component';
 
-import { AngularFireAuthGuard, canActivate, redirectLoggedInTo, redirectUnauthorizedTo } from '@angular/fire/auth-guard';
+import { canActivate, redirectLoggedInTo, redirectUnauthorizedTo } from '@angular/fire/auth-guard';
 
 const redirectUnauthorizedToLogin = () => redirectUnauthorizedTo(['login']);
 const redirectLoggedInToConsole = () => redirectLoggedInTo(['console']);
@@ -30,7 +30,8 @@ const routes: Routes = [
       { path: 'deleteproject', component: DeleteprojectComponent }
 
     ] },
-  { path: '', redirectTo: '/home', pathMatch: 'full' }
+  { path: '', redirectTo: '/home', pathMatch: 'full' },
+  { path: '**', redirectTo: '/home' }
 ];
 
 @NgModule({

@@ -1,8 +1,8 @@
 @import '../../styles.scss';
 
 #console-container {
+    margin-top: 75px;
     min-height: calc(100vh - 75px);
-    height: 100%;
 
     #side-nav {
         width: 215px;

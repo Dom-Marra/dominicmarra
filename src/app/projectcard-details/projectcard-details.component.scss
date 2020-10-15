@@ -43,7 +43,6 @@
             margin: auto;
             margin-top: 25px;
             width: 95%;
-            text-align: justify;
             overflow: visible;
         }
     
@@ -51,6 +50,47 @@
             position: relative;
             text-align: center;
             margin-top: 25px;
+
+            .fa-html5 {
+                color: #e34f26;
+            }
+
+            .fa-Firebase {
+                color: #ffca28
+            }
+
+            .fa-angular {
+                color: #dd0031
+            }
+
+            .fa-bootstrap {
+                color: #563d7c;
+            }
+
+            .fa-Typescript {
+                color: #007acc;
+            }
+
+            .fa-jQuery {
+                color: #0769ad;
+            }
+
+            .fa-css3 {
+                color: #1572b6;
+            }
+
+            .fa-js {
+                color: #f7df1e;
+            }
+
+            .fa-php {
+                color: #777bb4;
+            }
+
+            .fa-sass {
+                color: #c69;
+            }
+
         }
     
         .projectcard-icon {
@@ -69,10 +109,11 @@
     margin-right: auto;
 
     .projectcard-icon:hover {
-        color: lightskyblue;
+        color: mat-color($dominicmarra-accent, '50-contrast');
+        cursor: pointer;
     }
 
-    .github {
+    :nth-child(2) {
         padding-left: 24px;
     }
 }

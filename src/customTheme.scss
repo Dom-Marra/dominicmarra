@@ -1,6 +1,7 @@
 @import '~@angular/material/theming';
 @import url('https://fonts.googleapis.com/css2?family=Ropa+Sans&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Francois+One&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Quicksand&display=swap');
 
 @include mat-core();
 
@@ -57,12 +58,12 @@ $dominicmarra-theme: mat-light-theme((
 @include angular-material-theme($dominicmarra-theme);
 
 $dominicmarra-typography: mat-typography-config(
-  $font-family: 'Francois One, monospace',
+  $font-family: 'Francois One, monospace, Quicksand',
   $headline: mat-typography-level(45px, 45px, 500),
   $title: mat-typography-level(35px, 35px, 500),
   $subheading-2: mat-typography-level(24px, 24px, 500, 'Ropa Sans'),
-  $body-1: mat-typography-level(18px, 18px, 500, 'Ropa Sans'),
-  $caption: mat-typography-level(16px, 16px, 500, 'Ropa Sans'),
+  $body-1: mat-typography-level(18px, 18px, 500, 'Quicksand'),
+  $caption: mat-typography-level(16px, 16px, 500, 'Quicksand'),
 );
 
 @include angular-material-typography($dominicmarra-typography);
@@ -70,12 +71,12 @@ $dominicmarra-typography: mat-typography-config(
 @media only screen and (max-width: 790px) { 
 
   $dominicmarra-typography: mat-typography-config(
-    $font-family: 'Francois One, monospace',
+    $font-family: 'Francois One, monospace, Quicksand',
     $headline: mat-typography-level(40px, 40px, 500),
     $title: mat-typography-level(33px, 33px, 500),
     $subheading-2: mat-typography-level(22px, 22px, 500, 'Ropa Sans'),
-    $body-1: mat-typography-level(16px, 16px, 500, 'Ropa Sans'),
-    $caption: mat-typography-level(14px, 14px, 500, 'Ropa Sans'),
+    $body-1: mat-typography-level(16px, 16px, 500, 'Quicksand'),
+    $caption: mat-typography-level(14px, 14px, 500, 'Quicksand'),
   );
 
   @include angular-material-typography($dominicmarra-typography);
@@ -85,12 +86,12 @@ $dominicmarra-typography: mat-typography-config(
 @media only screen and (max-width: 360px) { 
 
   $dominicmarra-typography: mat-typography-config(
-    $font-family: 'Francois One, monospace',
+    $font-family: 'Francois One, monospace, Quicksand',
     $headline: mat-typography-level(35px, 35px, 500),
     $title: mat-typography-level(27px, 27px, 500),
     $subheading-2: mat-typography-level(20px, 20px, 500, 'Ropa Sans'),
-    $body-1: mat-typography-level(14px, 14px, 500, 'Ropa Sans'),
-    $caption: mat-typography-level(12px, 12px, 500, 'Ropa Sans'),
+    $body-1: mat-typography-level(14px, 14px, 500, 'Quicksand'),
+    $caption: mat-typography-level(12px, 12px, 500, 'Quicksand'),
   );
 
   @include angular-material-typography($dominicmarra-typography);

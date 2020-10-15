@@ -24,8 +24,10 @@
 
 <mat-dialog-actions>
     <div class="projectcard-links">
-        <fa-icon [icon]="faGithub" class="projectcard-icon"></fa-icon>
-        <fa-icon [icon]="faLink" class="projectcard-icon github"></fa-icon>
+        <fa-icon [icon]="faGithub" class="projectcard-icon" 
+        *ngIf="this.project.getGithubLink() != null" (click)="openLink(this.project.getGithubLink())"></fa-icon>
+        <fa-icon [icon]="faLink" class="projectcard-icon" 
+        *ngIf="this.project.getProjectLink() != null" (click)="openLink(this.project.getProjectLink())"></fa-icon>
     </div>
     <button class="close-button" mat-button (click)="close()">Exit</button>
 </mat-dialog-actions>

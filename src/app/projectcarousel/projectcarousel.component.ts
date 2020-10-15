@@ -1,4 +1,4 @@
-import { Component, ElementRef, HostListener, OnInit, ViewChild, Directive, ViewEncapsulation, ContentChild, TemplateRef, Host, ViewChildren, Input, OnChanges} from '@angular/core';
+import { Component, ElementRef, HostListener, OnInit, ViewChild, Directive, ViewEncapsulation, ContentChild, TemplateRef, Input, IterableDiffers} from '@angular/core';
 import { faChevronRight, faChevronLeft } from '@fortawesome/free-solid-svg-icons';
 import { GestureController } from '@ionic/angular';
 
@@ -40,16 +40,44 @@ export class ProjectcarouselComponent implements OnInit {
   public faChevronLeft = faChevronLeft;         //next slide icon
   public faChevronRight = faChevronRight;       //previous slide icon
 
-  public isAnimating = false;                   //is the carousel animating
+  public currentAnimations = 0;                   //is the carousel animating
 
   public currentSlideCount: number = 0;         //slider counter
 
   public swipeAmnt: number = 0;                 //current swipe amount
 
-  constructor(private gestureCtrl: GestureController) { }
+  public iterableDiffer;
+
+  constructor(private gestureCtrl: GestureController, private iterableDiffers: IterableDiffers) { 
+    this.iterableDiffer = iterableDiffers.find([]).create(null);
+  }
 
   ngOnInit(): void {
   }
+
+  ngAfterViewChecked() {
+    if (this.slidesContainer != null) { //update carousel when contents change
+      let changes = this.iterableDiffer.diff(this.slidesContainer.nativeElement.children);
+      if (changes) {
+        this.reinitCarouselView();
+      }
+    }
+  }
+
+  ngAfterViewInit(): void {
+    this.reinitCarouselView();
+
+    //Gesture object
+    const gesture = this.gestureCtrl.create({
+      el: this.slidesContainer.nativeElement,
+      gestureName: 'carousel-swipe',
+      onMove: (swipe) => { this.onSwipe(swipe); },
+      onEnd: (swipe) => { this.onSwipeEnd(swipe) },
+      onStart: () => { this.onSwipeStart() }
+    });
+    gesture.enable();
+  }
+
 
   /**
    * Handles when the swipe event is occuring
@@ -110,20 +138,6 @@ export class ProjectcarouselComponent implements OnInit {
     this.slidesContainer.nativeElement.classList.remove('disable-click');   //re-enable click events
   }
 
-  ngAfterViewInit(): void {
-    this.reinitCarouselView();
-
-    //Gesture object
-    const gesture = this.gestureCtrl.create({
-      el: this.slidesContainer.nativeElement,
-      gestureName: 'carousel-swipe',
-      onMove: (swipe) => { this.onSwipe(swipe); },
-      onEnd: (swipe) => { this.onSwipeEnd(swipe) },
-      onStart: () => { this.onSwipeStart() }
-    });
-    gesture.enable();
-  }
-
   /**
    * Will adjust the carousel container width, and repositions the slides container to the current slide
    */
@@ -176,7 +190,7 @@ export class ProjectcarouselComponent implements OnInit {
    */
   public next() {
 
-    if (this.isAnimating) return;                                                   //return if currently animating
+    if (this.currentAnimations > 0) return;                                         //return if currently animating
     let slideWidth = this.slides[0].getBoundingClientRect().width;                  //get width of a slide
 
     if (this.currentSlideCount - 1 == (((this.slides.length / 2) * -1) - 1)) {      //once the end is reached reset to the first slide
@@ -197,7 +211,7 @@ export class ProjectcarouselComponent implements OnInit {
    */
   public previous() {
     
-    if (this.isAnimating) return;                                                   //return if currently animating
+    if (this.currentAnimations > 0) return;                                         //return if currently animating
     
     let slideWidth = this.slides[0].getBoundingClientRect().width;                  //get width of a slide
 
@@ -222,13 +236,13 @@ export class ProjectcarouselComponent implements OnInit {
    *        amount to transition by
    */
   public animateMovement(slideAmount: number, instant?: boolean) {
-    this.isAnimating = true;                                          //set animating
+    this.currentAnimations++;
 
     this.slidesContainer.nativeElement.animate([
       {transform: 'translateX(' + slideAmount + 'px)'}
     ], {fill: 'both', easing: 'ease-in-out', duration: instant ? 0 : 400}).finished.then(() => {
       this.slidesContainer.nativeElement.style.transform = 'translateX(' + slideAmount + 'px)';       //adjust inline style
-      this.isAnimating = false;                                                                       //animation is complete
+      this.currentAnimations--;                                                                       //animation is complete
     });
   }
 

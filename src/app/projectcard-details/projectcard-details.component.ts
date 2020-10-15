@@ -37,4 +37,14 @@ export class ProjectcardDetailsComponent implements OnInit {
     this.dialogRef.close()
   }
 
+  /**
+   * Opens a specified link in a new window
+   * 
+   * @param url
+   *        URL of link to open
+   */
+  public openLink(url: string) {
+    window.open(url, 'newWin');
+  }
+
 }

@@ -1,5 +1,13 @@
 @import '../../../styles.scss';
 
+.custom-dropdown {
+    .mat-pseudo-checkbox {
+        &::after {
+            color: mat-color($dominicmarra-accent, 50);
+        }
+    }
+}
+
 #project-form { 
     @include custom-material-form();
     margin-top: 50px;

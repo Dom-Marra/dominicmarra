@@ -1,0 +1,12 @@
+@import '../../../styles.scss';
+
+
+@include custom-base-button();
+
+#action {
+    background-color: mat-color($dominicmarra-warn, 50);
+
+    &:hover {
+        color: lighten(mat-color($dominicmarra-warn, 50), 30);
+    }
+}

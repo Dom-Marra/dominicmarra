@@ -10,7 +10,8 @@
         justify-content: center;
         width: 100%;
         height: auto;
-        min-height: calc(100vh - 75px);
+        padding: 50px 0;
+        min-height: calc(100vh - 175px);
 
         
         #about-me-contents {
@@ -76,11 +77,11 @@
         width: 90%;
         margin: auto;
         flex: 1 1 auto;
-        margin-bottom: 25px;
+        padding: 15px 0;
     }
 
     .project {
-        padding: 0 5px 0 5px;
+        padding: 10px 5px 10px 5px;
     }
 
 }

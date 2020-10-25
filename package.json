@@ -37,6 +37,7 @@
     "simplebar-angular": "^3.0.0-beta.5",
     "tslib": "^2.0.0",
     "uuid": "^8.3.1",
+    "web-animations-js": "^2.3.2",
     "zone.js": "~0.10.2"
   },
   "devDependencies": {

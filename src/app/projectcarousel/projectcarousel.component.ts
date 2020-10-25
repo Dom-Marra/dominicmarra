@@ -1,6 +1,14 @@
 import { Component, ElementRef, HostListener, OnInit, ViewChild, Directive, ViewEncapsulation, ContentChild, TemplateRef, Input, IterableDiffers} from '@angular/core';
 import { faChevronRight, faChevronLeft } from '@fortawesome/free-solid-svg-icons';
 import { GestureController } from '@ionic/angular';
+import {
+  trigger,
+  state,
+  style,
+  animate,
+  transition,
+  // ...
+} from '@angular/animations';
 
 export interface options {
   slidesToDisplay: number,
@@ -19,7 +27,15 @@ export class TranscludeDirective { }
   selector: 'app-projectcarousel',
   templateUrl: './projectcarousel.component.html',
   styleUrls: ['./projectcarousel.component.scss'],
-  encapsulation: ViewEncapsulation.None
+  encapsulation: ViewEncapsulation.None,
+  animations: [
+    trigger('slideAnimation', [
+      state('sliding', style({
+        transform: 'translateX({{slideAmount}}px)'
+      }), {params: {slideAmount: 0}}),
+      transition('* => sliding', animate('400ms ease-out'))
+    ])
+  ]
 })
 export class ProjectcarouselComponent implements OnInit {
 
@@ -47,6 +63,9 @@ export class ProjectcarouselComponent implements OnInit {
   public swipeAmnt: number = 0;                 //current swipe amount
 
   public iterableDiffer;
+
+  public slideAmount: number;                   //animation paramter slide amount      
+  public slideState: string = null;             //animation state
 
   constructor(private gestureCtrl: GestureController, private iterableDiffers: IterableDiffers) { 
     this.iterableDiffer = iterableDiffers.find([]).create(null);
@@ -136,6 +155,7 @@ export class ProjectcarouselComponent implements OnInit {
     this.animateMovement(slideAmount);                                    
 
     this.slidesContainer.nativeElement.classList.remove('disable-click');   //re-enable click events
+    window.getSelection().removeAllRanges();
   }
 
   /**
@@ -230,20 +250,30 @@ export class ProjectcarouselComponent implements OnInit {
   }
 
   /**
-   * Transitions the carousel
+   * If instant is set to true, the slide transitions to the inputted slide amount, otherwise it sets the amount that the 
+   * carousel should transition by, and sets the animation state to sliding
    * 
    * @param slideAmount 
    *        amount to transition by
    */
   public animateMovement(slideAmount: number, instant?: boolean) {
-    this.currentAnimations++;
-
-    this.slidesContainer.nativeElement.animate([
-      {transform: 'translateX(' + slideAmount + 'px)'}
-    ], {fill: 'both', easing: 'ease-in-out', duration: instant ? 0 : 400}).finished.then(() => {
-      this.slidesContainer.nativeElement.style.transform = 'translateX(' + slideAmount + 'px)';       //adjust inline style
-      this.currentAnimations--;                                                                       //animation is complete
-    });
+    if (instant) {
+      this.slidesContainer.nativeElement.style.transform = 'translateX(' + slideAmount + 'px)';
+    } else {
+      this.currentAnimations++;
+      this.slideAmount = slideAmount;
+      this.slideState = 'sliding';
+    }
+    
   }
 
+  /**
+   * Sets inline style to the slides container when the angular animation completes, resets the state and unblocks
+   * further animations
+   */
+  public slideAnimationEnded() {
+    this.slidesContainer.nativeElement.style.transform = 'translateX(' + this.slideAmount + 'px)';
+    this.slideState = null;
+    this.currentAnimations = 0;
+  }
 }

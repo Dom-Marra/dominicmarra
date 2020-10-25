@@ -5,50 +5,44 @@
     width: 100%;
 
     #about-me-container {
-        display: flex;
-        align-items: center;
-        justify-content: center;
         width: 100%;
-        height: auto;
+        height: calc(100vh - 175px);
         padding: 50px 0;
-        min-height: calc(100vh - 175px);
 
         
         #about-me-contents {
-            justify-content: space-evenly;
+            margin: auto;
             display: flex;
-            height: 350px;
+            flex-direction: column;
+            justify-content: center;
+            height: 100%;
             width: 95%;
 
-            #about-me-img, #about-me-img-repos {
-                align-self: center;
-                display: inline-block;
-                width: 350px;
-                height: 350px;
-                background-color: mat-color($dominicmarra-accent, 50);
+            
+            #about-me-header {
+                width: 100%;
+                margin-bottom: 2.5em;
             }
 
-            #about-me-img-repos {
-                display: none;
-            }
-    
             #about-me-text-container {
-                display: inline-flex;
-                flex-wrap: wrap;
-                width: auto;
-                max-width: calc(95% - 350px);
-                height: 100%;
+                display: flex;
+                align-items: center;
+                justify-content: space-around;
+                width: 100%;
+                height: auto;
                 margin: 0;
 
-                #about-me-header {
-                    width: 100%;
-                    margin: 0;
-                    padding: 0;
+                #about-me-img {
+                    height: auto;
+                    display: inline-block;
+                    width: 35%;
+                    padding: 0 10px;
+                    min-width: 350px;
                 }
     
                 #about-me-text {
+                    max-width: 75%;
                     margin: 0;
-                    align-self: stretch;
                     line-height: 1.75;
                 }
             }
@@ -93,39 +87,30 @@
         #about-me-container {
             width: 75%;
             margin: auto;
+            height: auto;
             min-height: auto;
 
             #about-me-contents {
-                height: auto;
-                align-items: center;
 
-                #about-me-img {
-                    display: none;
-                    visibility: hidden;
-                }
-
-                #about-me-img-repos {
-                    width: 100%;
-                    max-width: 350px;
-                    padding-bottom: 350px;
-                    margin: auto;
-                    height: 0;
-                    display: block;
+                #about-me-header {
+                    text-align: center;
+                    margin: 2.5em 0;
                 }
 
                 #about-me-text-container { 
-                    align-items: center;
+                    flex-wrap: wrap;
                     width: 100%;
                     max-width: 100%;
                     height: auto;
 
-                    #about-me-header {
-                        text-align: center;
-                        padding: 75px 0;
+                    #about-me-img {
+                        width: 100%;
+                        min-width: auto;
                     }
                     
                     #about-me-text {
-                        padding: 75px 0;
+                        max-width: none;
+                        padding: 3.5em 0;
                         text-align: center;
                     }
                     

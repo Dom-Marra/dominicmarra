@@ -49,18 +49,15 @@ export class HomeComponent implements OnInit {
 
   ngAfterViewInit() {
 
-    this.activeFrag.subscribe(activeFrag => {        
+    this.activeFrag.subscribe(activeFrag => {    
       if (activeFrag.getWasRouted()) {
         let el = document.querySelector('#' + activeFrag.getFragment());  //element to scroll to
 
         if (el != null) {                                                 //only scroll if an element was found
           let top = el.getBoundingClientRect().top -                      //calculate the scroll amount
-                    this.element.nativeElement.getBoundingClientRect().top;            
-          try {
-            window.scrollTo({behavior: "smooth", top: top});
-          } catch (e) {
-            window.scrollTo(0, top);
-          }
+                    this.element.nativeElement.getBoundingClientRect().top;           
+          
+          window.scroll(0, top);
         }
       }
     });

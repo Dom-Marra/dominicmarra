@@ -1,7 +1,7 @@
 <div class="carousel">
     <div #carousel class="slides-wrapper">
         <div class="slides-container">
-            <div #slidesContainer class="carousel-slides">
+            <div #slidesContainer class="carousel-slides" [@slideAnimation]="{value: slideState, params: {slideAmount: this.slideAmount}}" (@slideAnimation.done)="slideAnimationEnded()">
                 <ng-container *ngTemplateOutlet="transcludeTemplate"></ng-container>
                 <ng-container *ngTemplateOutlet="transcludeTemplate"></ng-container>
             </div>

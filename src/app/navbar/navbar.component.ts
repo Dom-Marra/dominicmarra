@@ -35,7 +35,14 @@ export class NavbarComponent implements OnInit {
    *        Event that fired the function
    */
   public addHovered(event) {
-    if (!event.sourceCapabilities.firesTouchEvents) event.target.classList.add('hovered');
+    let fireTouch: boolean;
+
+    try {
+      fireTouch = event.sourceCapabilities.firesTouchEvents;
+    } catch {
+      fireTouch = false;
+    }
+    if (!fireTouch) event.target.classList.add('hovered');
   }
 
   /**

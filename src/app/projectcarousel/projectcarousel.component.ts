@@ -39,6 +39,10 @@ export class TranscludeDirective { }
 })
 export class ProjectcarouselComponent implements OnInit {
 
+  @HostListener('touchend', ['$event']) onTouchEnd(): void {    //need this for some reason for angular animations to fire on ionic gesture swipe
+    //do nothing
+  }
+
   @Input('options') carouselOptions: options = {
     slidesToDisplay: 1
   }
@@ -260,8 +264,8 @@ export class ProjectcarouselComponent implements OnInit {
     if (instant) {
       this.slidesContainer.nativeElement.style.transform = 'translateX(' + slideAmount + 'px)';
     } else {
-      this.currentAnimations++;
       this.slideAmount = slideAmount;
+      this.currentAnimations++;
       this.slideState = 'sliding';
     }
     
